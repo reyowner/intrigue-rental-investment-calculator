@@ -4,7 +4,7 @@ An assessment project for Intrigue Real Estate & Property Management, intended t
 
 ## Status
 
-**Phase 0: foundation only.** This first commit contains a working static placeholder, brand tokens, supplied logo assets, and development documentation. The landing page, calculator, results, charts, and contact form have not been implemented. No financial results are claimed as verified.
+**Phase 1: landing page.** Responsive branded landing page, mobile navigation, how-it-works section, a clearly labeled calculator preview, and a browser-only contact form. The calculation engine, live inputs/results, projection table, and chart are not implemented yet. No financial results are claimed as verified.
 
 ## Stack
 
@@ -12,24 +12,30 @@ Plain HTML, CSS, and JavaScript. No framework, package installation, build step,
 
 ## Run locally
 
-Open `index.html` directly in a browser. Alternatively, from the repository directory, run:
+From the repository directory, serve the files over HTTP:
 
 ```sh
 python -m http.server 8000 --bind 127.0.0.1
 ```
 
-Then visit `http://127.0.0.1:8000`. Python is only a convenience for local serving, not a runtime or build dependency.
+Then visit `http://127.0.0.1:8000`. Python is only a convenience for local serving, not a runtime or build dependency. Any static HTTP server works. Native JavaScript modules require HTTP; opening `index.html` directly with `file://` will show the fallback instead of the application. Deploy the repository root, not just `src/`, when hosting is authorized.
 
 ## Structure
 
 ```text
-index.html                 Minimal static entry page
-assets/css/styles.css      Brand tokens and scaffold styles
-assets/js/main.js          Reserved application entry point
-assets/images/             Supplied Intrigue brand assets
-assets/images/README.md    Asset provenance and usage cautions
-docs/roadmap.md             Development phases and acceptance gates
-docs/calculation-notes.md   Source mapping, overrides, and check figures
+index.html                     Document shell and no-JavaScript fallback
+src/main.js                    Native-module application entry
+src/pages/homepage.js           Page composition and section-link focus
+src/components/                Shared header, footer, and line icons
+src/styles/                    Global styles and brand tokens
+src/features/homepage/          Landing-page sections and copy constants
+src/features/calculator/        Static preview and example input values
+assets/images/                 Local brand assets and property photo
+tests/check-static.mjs          Dependency-free source checks
+docs/architecture.md           Feature ownership and extension rules
+docs/verification.md           Checks performed and coverage limits
+docs/roadmap.md                Development phases
+docs/calculation-notes.md       Source mapping, overrides, check figures
 ```
 
 ## Source precedence
@@ -42,8 +48,12 @@ The workbook and original assessment attachment are intentionally not committed.
 
 See [the roadmap](docs/roadmap.md). Keep calculation logic separate from DOM rendering, use full precision internally, and round only for display. Future calculation tests must run without a frontend framework or production build step.
 
-For the foundation, verify local asset loading, JavaScript syntax, phone-width overflow, keyboard skip navigation, and an honest unimplemented state. Later cross-browser testing and financial verification remain pending.
+Run `node --test tests/check-static.mjs` for dependency-free source checks. See [verification notes](docs/verification.md) for browser interaction checks and limitations. Full Safari, Firefox, and Edge coverage and all financial verification remain pending.
+
+The contact form validates name, email, optional phone, and message in the browser. It does not send, persist, or log contact details. A successful check explicitly says that nothing was sent. The separate main-website link is the real contact route.
+
+The calculator preview is presentation-only, with no editable controls, calculated results, fake chart, or implied working financial engine. Read-only example values come from the supplied duplex.
 
 ## AI-use disclosure
 
-This foundation was prepared with OpenAI's GPT-6.1 model through Hermes Agent by Nous Research. AI assistance was used to review the supplied requirements and workbook structure, scaffold static files, write documentation, and perform repository and smoke checks. AI assistance does not replace developer review. The submitting developer remains responsible for understanding, validating, and explaining every submitted line and the eventual calculation logic.
+The foundation and landing page were prepared with OpenAI's GPT-6.1 model through Hermes Agent by Nous Research. AI assistance was used to review the supplied requirements, workbook structure, and official brand reference, implement the static page and local interactions, write documentation, and perform source and browser checks. AI assistance does not replace developer review. The submitting developer remains responsible for understanding, validating, and explaining every submitted line and the eventual calculation logic.

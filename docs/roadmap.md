@@ -1,6 +1,6 @@
 # Development roadmap
 
-Only Phase 0 is authorized for the initial commit. Each later phase needs user direction before implementation or another GitHub push. Do not deploy as part of the foundation.
+Phase 0 is committed on `main`. Phase 1 landing-page implementation is complete locally on `develop`, with a clearly labeled noninteractive calculator preview. The calculator engine and other later phases remain out of scope until requested. Further GitHub pushes and deployment require separate authorization.
 
 ## Phase 0: repository foundation
 
