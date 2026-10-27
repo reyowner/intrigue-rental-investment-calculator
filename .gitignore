@@ -1,0 +1,21 @@
+# Local credentials and environment configuration
+.env
+.env.*
+!.env.example
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local source material and generated artifacts
+source-material/
+work/
+outputs/
+*.xlsx
+*.xls
+*.log
+__pycache__/
+node_modules/

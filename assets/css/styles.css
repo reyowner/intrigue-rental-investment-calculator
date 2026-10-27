@@ -1,0 +1,93 @@
+/* Brand tokens and a minimal scaffold, not the final landing-page design. */
+:root {
+  --color-dark-teal: #123a48;
+  --color-teal: #1b5063;
+  --color-lime: #9dc31b;
+  --color-light-teal: #cce5ed;
+  --color-background: #ffffff;
+  --font-family: "Raleway", sans-serif;
+  --button-radius: 8px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--color-dark-teal);
+  background: var(--color-background);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.site-header,
+main,
+.site-footer {
+  padding: 1.5rem clamp(1rem, 4vw, 4rem);
+}
+
+.site-header {
+  border-bottom: 1px solid var(--color-light-teal);
+}
+
+.brand-logo {
+  display: block;
+  width: min(15rem, 100%);
+  height: auto;
+}
+
+h1 {
+  max-width: 24ch;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: 1.2;
+  overflow-wrap: break-word;
+}
+
+p {
+  max-width: 65ch;
+}
+
+.project-status {
+  padding: 1rem;
+  background: var(--color-light-teal);
+}
+
+.site-footer {
+  border-top: 1px solid var(--color-light-teal);
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  font-size: 1rem;
+}
+
+button {
+  border-radius: var(--button-radius);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-teal);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
+  z-index: 1;
+  padding: 0.75rem;
+  color: var(--color-dark-teal);
+  background: var(--color-background);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
