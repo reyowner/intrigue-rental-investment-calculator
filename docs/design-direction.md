@@ -7,7 +7,7 @@ Follow the assessment over live-site differences: dark teal #123A48, teal #1B506
 ## Chosen composition
 
 ```text
-White header: genuine teal wordmark | section navigation | conversation
+Floating dark-teal header: white PNG lettering + original lime SVG mark | app section navigation | lime conversation
 Dark teal hero: local investor headline and actions | residential photo
 Quiet reassurance strip
 White how-it-works section: three ordered, separated steps
@@ -18,7 +18,7 @@ White footer
 
 Desktop uses a split hero with a real porch/bungalow photograph from the official site. Phone layouts lead with readable copy and actions, followed by a compact photo. The dark teal field is the page's strongest brand gesture; the rest stays restrained. No fabricated numerical hero stats, stock dashboard charts, testimonials, or investment guarantees.
 
-Typography uses Raleway 400/500/600/700, sentence-case labels, left-aligned text, and short reading measures. Lime is reserved for the hero's main action. Most content remains unboxed; only the preview and form need contained surfaces.
+Typography uses Raleway 400/500/600/700, sentence-case labels, left-aligned text, and short reading measures. Lime is reserved for primary actions in the hero and navigation. Most content remains unboxed; only the preview and form need contained surfaces.
 
 ## Review against generic defaults
 

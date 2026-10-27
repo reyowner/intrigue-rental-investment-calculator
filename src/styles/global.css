@@ -12,7 +12,8 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 1rem;
+  scroll-padding-top: var(--navigation-offset, 1rem);
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -23,6 +24,25 @@ body {
   font-size: 1rem;
   line-height: 1.65;
   -webkit-text-size-adjust: 100%;
+}
+
+/* Share the first grid row so the hero continues behind the floating header.
+   The header remains sticky without reserving an opaque strip above main. */
+#app {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+#app > .site-header,
+#app > main {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+
+#app > .site-footer {
+  grid-column: 1;
+  grid-row: 2;
 }
 
 button, input, textarea, select {
@@ -174,7 +194,7 @@ p {
   position: absolute;
   top: .5rem;
   left: 1rem;
-  z-index: 30;
+  z-index: 100;
   transform: translateY(-200%);
   padding: .75rem 1rem;
   color: var(--color-dark-teal);

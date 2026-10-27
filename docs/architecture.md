@@ -44,7 +44,9 @@ Small functions return developer-authored HTML strings, composed once at startup
 
 CSS files are imported from `src/styles/global.css` and stay next to the section/component they style. Shared classes such as `.button` and shared tokens belong in global styles. The page itself has no fixed maximum width; text blocks and form internals remain readable.
 
-Navigation uses real fragment anchors, preserving direct links, reloads, and native browser history. Focus transfers after the native anchor action. Mobile links are removed from keyboard access by `display: none` while collapsed; Escape closes the menu and restores focus.
+The application shell places the header and main in the same CSS grid row, with the footer below. This lets the hero continue behind the transparent floating header instead of exposing a separate white band. The header is aligned to the start of that row so sticky positioning remains effective. Hero top padding uses the navigation offset to keep content below the bar. DOM reading and keyboard order remain header, main, footer.
+
+Navigation uses app-local fragment anchors, preserving direct links, reloads, and native browser history. `site-header/navigation.js` owns link labels and destinations. The floating dark-teal bar stays sticky, with scroll-padding clearance for section targets. The mobile navigation is a native modal `dialog`, with background inertness, scroll locking, focus containment, Escape dismissal, and focus restoration. Resizing to desktop closes it without leaving background scrolling locked.
 
 ## Scope and future seams
 

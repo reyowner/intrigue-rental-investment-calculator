@@ -1,5 +1,6 @@
 .hero {
   display: grid;
+  padding-top: var(--navigation-offset);
   background: var(--color-dark-teal);
   color: white;
 }

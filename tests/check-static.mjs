@@ -76,3 +76,37 @@ test('preview and form expose honest unimplemented states', () => {
   assert.match(contact, /nothing has been sent to Intrigue/);
   assert.doesNotMatch(contact, /fetch\(|XMLHttpRequest|localStorage|sessionStorage|console\.log/);
 });
+
+test('navigation retains only calculator-app section destinations', () => {
+  const content = readFileSync(resolve(root, 'src/components/site-header/navigation.js'), 'utf8');
+  const targets = [...content.matchAll(/href: '(#[^']+)'/g)].map(match => match[1]);
+  assert.deepEqual(targets, ['#how-it-works', '#calculator', '#contact']);
+  assert.doesNotMatch(content, /https?:/);
+});
+
+test('navigation combines white PNG lettering with the original lime SVG mark', () => {
+  const header = readFileSync(resolve(root, 'src/components/site-header/site-header.js'), 'utf8');
+  const styles = readFileSync(resolve(root, 'src/components/site-header/site-header.css'), 'utf8');
+  assert.match(header, /assets\/images\/intrigue-lettering\.png/);
+  assert.match(header, /assets\/images\/intrigue-brand-mark\.svg/);
+  assert.match(header, /<dialog/);
+  assert.match(header, /dialog\.showModal\(\)/);
+  assert.match(header, /aria-controls="mobile-navigation"/);
+  assert.match(styles, /filter: brightness\(0\) invert\(1\)/);
+  assert.match(styles, /\.site-header \.header-mark \{[^}]*filter: none/s);
+  const mark = readFileSync(resolve(root, 'assets/images/intrigue-brand-mark.svg'), 'utf8');
+  assert.match(mark, /fill="#9DC31B"/);
+  assert.equal((mark.match(/<path /g) || []).length, 1);
+  assert.match(styles, /position: sticky/);
+  assert.ok(!header.includes('theme-toggle'));
+});
+
+test('floating navigation shares the hero backdrop without an opaque header strip', () => {
+  const global = readFileSync(resolve(root, 'src/styles/global.css'), 'utf8');
+  const header = readFileSync(resolve(root, 'src/components/site-header/site-header.css'), 'utf8');
+  const hero = readFileSync(resolve(root, 'src/features/homepage/sections/hero/hero.css'), 'utf8');
+  assert.match(global, /#app \{[^}]*display: grid/s);
+  assert.match(global, /#app > \.site-header,[\s\S]*?#app > main \{[^}]*grid-row: 1/s);
+  assert.match(header, /\.site-header \{[^}]*align-self: start[^}]*background: transparent/s);
+  assert.match(hero, /\.hero \{[^}]*padding-top: var\(--navigation-offset\)/s);
+});
