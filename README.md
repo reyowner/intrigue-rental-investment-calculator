@@ -4,7 +4,7 @@ An assessment project for Intrigue Real Estate & Property Management, intended t
 
 ## Status
 
-**Phase 1: landing page.** Responsive branded landing page, mobile navigation, how-it-works section, a clearly labeled calculator preview, and a browser-only contact form. The calculation engine, live inputs/results, projection table, and chart are not implemented yet. No financial results are claimed as verified.
+**Phase 2: calculation engine.** The branded landing page and navigation are in place. A pure, browser-side calculation engine now produces the full 30-year model and matches every assessment check figure. The page still shows the explicitly noninteractive preview: live controls/results, projection-table rendering, and the chart belong to the next phases. No backend or deployment has been added.
 
 ## Stack
 
@@ -29,13 +29,15 @@ src/pages/homepage.js           Page composition and section-link focus
 src/components/                Shared header, footer, and line icons
 src/styles/                    Global styles and brand tokens
 src/features/homepage/          Landing-page sections and copy constants
-src/features/calculator/        Static preview and example input values
+src/features/calculator/        Pure calculation engine, defaults, and static preview
 assets/images/                 Local brand assets and property photo
 tests/check-static.mjs          Dependency-free source checks
+tests/calculator/              Financial regression tests and independent fixtures
 docs/architecture.md           Feature ownership and extension rules
 docs/verification.md           Checks performed and coverage limits
 docs/roadmap.md                Development phases
 docs/calculation-notes.md       Source mapping, overrides, check figures
+docs/calculator-engine.md       Engine API, error policy, and verification
 ```
 
 ## Source precedence
@@ -44,16 +46,62 @@ The assessment brief is the authority for calculation rules and check figures. T
 
 The workbook and original assessment attachment are intentionally not committed. Supplied logos remain the property of their respective owner; inclusion does not grant a redistribution license. No open-source license is assigned by this scaffold.
 
+## How the calculator engine works
+
+The engine is a pure calculation module, separate from page rendering. The same inputs produce the same results, without calling a server or changing stored data.
+
+1. **Validate the deal.** Check amounts, percentage ranges, and loan term. Omitted inputs use the example defaults; an explicitly blank or invalid field produces an error rather than a misleading zero.
+2. **Calculate the cash needed.** Loan amount is purchase price less down payment. Initial cash is down payment plus buying closing costs and renovation costs.
+3. **Build the mortgage schedule.** Calculate principal and interest month by month, including 0% interest. Stop payments after payoff, even when the projection continues.
+4. **Calculate operating performance.** Deduct vacancy from scheduled rent. Calculate management on collected rent and maintenance on gross rent. Subtract operating expenses to get net operating income (NOI), then subtract mortgage payments to get cash flow.
+5. **Project 30 years.** Apply each operating growth assumption from Year 2, track property appreciation, loan balance, equity, and capped depreciation, and calculate sale proceeds for each possible sale year.
+6. **Calculate returns.** Cap rate uses NOI divided by the property's start-of-year value. Cash-on-cash return uses cash flow divided by initial cash. IRR includes the timing of annual cash flows and sale proceeds, and is unavailable when no unique supported rate can be established.
+
+All calculation amounts retain full precision; rounding belongs to the display layer. Input percentages use percentage points (`6.5`), while returned rates use fractions (`0.065`).
+
+For the unchanged example duplex, the engine produces:
+
+| Result | Verified display |
+|---|---:|
+| Loan amount | $202,500 |
+| Monthly principal and interest | $1,279.94 |
+| Initial cash required | $70,200 |
+| Year 1 NOI | $19,188 |
+| Year 1 monthly cash flow | $319 |
+| Year 1 cap rate | 7.11% |
+| Year 1 cash-on-cash return | 5.45% |
+| Year 5 equity | $123,442 |
+
+See the [calculation walkthrough and API](docs/calculator-engine.md) for formulas, result structure, error handling, and IRR implementation. The [source notes](docs/calculation-notes.md) explain every required spreadsheet correction and list all assessment check figures.
+
+## Why the results are verifiable
+
+Confidence comes from inspectable rules and repeatable checks, not from an assertion that the calculator is infallible:
+
+- **An explicit source hierarchy.** The assessment's calculation rules win over known spreadsheet errors. Examples include management on collected rent, growing insurance/HOA, and cap rate based on start-of-year value. The original workbook was preserved unchanged.
+- **All supplied check figures pass.** The committed suite verifies the assessment's initial, Year 1, Year 5, Year 10, and Year 30 figures, not just the headline values above.
+- **Independent comparisons.** Tests compare nonzero expense lines against a separately calculated 50-digit Python Decimal fixture and conventional IRRs against an independent bisection oracle. Accounting identities reconcile cash flow, equity, and mortgage balances.
+- **Difficult cases are tested.** Coverage includes blank/negative inputs, zero interest, cash purchases, short loans, declining assumptions, depreciation limits, zero denominators, and repeated or multiple IRR roots. Undefined returns remain explicitly unavailable instead of being presented as 0%.
+- **Verification goes beyond Node.** The recorded run passed 102 automated tests and 26 native-module checks in the available Chromium-based browser. A separate fresh-context AI-assisted review also challenged known-factor and extreme-scaling IRR cases; it reported no reproducible defects within its coverage.
+
+The committed Node suite is the repeatable baseline. Browser checks and AI-assisted review are supplementary evidence, not an independent professional audit or a mathematical proof. The projections depend on the visitor's assumptions; they do not guarantee rents, appreciation, financing terms, or investment outcomes. Currency calculations use JavaScript floating-point arithmetic, not a lender's cent-rounded servicing ledger. Cross-browser and physical-device coverage remains limited as documented below.
+
 ## Development and verification
 
-See [the roadmap](docs/roadmap.md). Keep calculation logic separate from DOM rendering, use full precision internally, and round only for display. Future calculation tests must run without a frontend framework or production build step.
+See [the roadmap](docs/roadmap.md). Calculation logic is separate from DOM rendering, uses full precision internally, and leaves rounding to the display layer. See the [engine API](docs/calculator-engine.md) to call it independently of the page.
 
-Run `node --test tests/check-static.mjs` for dependency-free source checks. See [verification notes](docs/verification.md) for browser interaction checks and limitations. Full Safari, Firefox, and Edge coverage and all financial verification remain pending.
+Run the complete dependency-free test suite:
+
+```sh
+node --test tests/calculator/*.test.mjs tests/check-static.mjs
+```
+
+Tests were executed with Node.js 24.22.1. Node is a test-only tool, not a browser runtime or build dependency. See [verification notes](docs/verification.md) for browser checks and coverage limits. Safari, Firefox, Edge-specific, and physical-device verification remain pending.
 
 The contact form validates name, email, optional phone, and message in the browser. It does not send, persist, or log contact details. A successful check explicitly says that nothing was sent. The separate main-website link is the real contact route.
 
-The calculator preview is presentation-only, with no editable controls, calculated results, fake chart, or implied working financial engine. Read-only example values come from the supplied duplex.
+The visible calculator preview remains presentation-only, with no editable controls, rendered financial results, or fake chart. The independently tested engine is intentionally not wired to it yet. Read-only example values come from the supplied duplex.
 
 ## AI-use disclosure
 
-The foundation and landing page were prepared with OpenAI's GPT-6.1 model through Hermes Agent by Nous Research. AI assistance was used to review the supplied requirements, workbook structure, and official brand reference, implement the static page and local interactions, write documentation, and perform source and browser checks. AI assistance does not replace developer review. The submitting developer remains responsible for understanding, validating, and explaining every submitted line and the eventual calculation logic.
+The foundation, landing page, and calculation engine were prepared with OpenAI's GPT-6.1 model through Hermes Agent by Nous Research. AI assistance was used for requirements and workbook review, brand research, implementation, regression tests, independent calculation fixtures, adversarial code review, documentation, and browser checks. AI assistance does not replace developer review. The submitting developer remains responsible for understanding, validating, and explaining every submitted line and the calculation logic.

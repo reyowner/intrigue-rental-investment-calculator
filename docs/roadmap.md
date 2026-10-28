@@ -1,6 +1,6 @@
 # Development roadmap
 
-Phase 0 is committed on `main`. Phase 1 landing-page implementation is complete locally on `develop`, with a clearly labeled noninteractive calculator preview. The calculator engine and other later phases remain out of scope until requested. Further GitHub pushes and deployment require separate authorization.
+Phase 0 is committed on `main`. Phase 1 landing page and navigation are committed on `develop`. Phase 2 is implemented on `feat/calculation-engine`, with the calculation engine tested independently of the page. The visible calculator remains a clearly labeled noninteractive preview. Phases 3 onward are not implemented. Publishing the Phase 2 feature branch is separately authorized. Merging into `develop` or `main` and deployment are not included.
 
 ## Phase 0: repository foundation
 
@@ -26,7 +26,7 @@ Phase 0 is committed on `main`. Phase 1 landing-page implementation is complete 
 - Fixed-rate monthly amortization, annual growth starting Year 2, sale proceeds, capped depreciation, and annual-sale IRR.
 - Test every supplied check figure, zero interest, early payoff, zero cash/property value, blank/negative inputs, and non-finite values.
 - Return an explicit unavailable state for undefined ratios or unsolvable/ambiguous IRR, not a fabricated zero.
-- Gate: automated check-figure and edge-case tests; document policy choices.
+- Gate: automated check-figure and edge-case tests; document policy choices. See [the engine API and verification record](calculator-engine.md).
 
 ## Phase 3: interactive calculator and headline results
 
