@@ -1,0 +1,26 @@
+{
+  "family": "Raleway",
+  "license": "OFL-1.1",
+  "sourceCommit": "799331018b4fe67a33f1d001d09304b612864568",
+  "purpose": "Unmodified static TrueType faces for locally generated PDF text",
+  "files": [
+    {
+      "file": "Raleway-Regular.ttf",
+      "source": "https://raw.githubusercontent.com/google/fonts/799331018b4fe67a33f1d001d09304b612864568/ofl/raleway/Raleway-Regular.ttf",
+      "bytes": 178520,
+      "sha256": "20e4ae409ffbe8bfd2af14d7f717398408ae8b481005beccb83d62ef4052b681"
+    },
+    {
+      "file": "Raleway-Bold.ttf",
+      "source": "https://raw.githubusercontent.com/google/fonts/799331018b4fe67a33f1d001d09304b612864568/ofl/raleway/Raleway-Bold.ttf",
+      "bytes": 179244,
+      "sha256": "ca9de8b3be7ccd4b80774a9c7dd56a98c49c276771c5957729b5958d1d579112"
+    },
+    {
+      "file": "OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/799331018b4fe67a33f1d001d09304b612864568/ofl/raleway/OFL.txt",
+      "bytes": 4650,
+      "sha256": "e588abf45ca2b19c340c4b27349c9b6b6e5e198316fd965128ed9f4422942cbe"
+    }
+  ]
+}

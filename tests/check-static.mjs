@@ -105,7 +105,7 @@ test('navigation combines white PNG lettering with the original lime SVG mark', 
   assert.match(mark, /fill="#9DC31B"/);
   assert.equal((mark.match(/<path /g) || []).length, 1);
   assert.match(styles, /position: sticky/);
-  assert.ok(!header.includes('theme-toggle'));
+  assert.match(header, /data-theme-toggle/);
 });
 
 test('floating navigation shares the hero backdrop without an opaque header strip', () => {

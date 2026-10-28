@@ -18,6 +18,8 @@ export function initializeCalculator(scope = document) {
   const state = workspace.querySelector('[data-result-state]');
   const announcement = workspace.querySelector('[data-calculator-announcement]');
   let focusFrame;
+  let snapshot;
+  const subscribers = new Set();
   // Native focus scrolling does not account for the sticky results action.
   function keepFocusedInputVisible(control) {
     if (!control?.matches?.('input[name]') || !form.contains(control)) return;
@@ -46,7 +48,9 @@ export function initializeCalculator(scope = document) {
   }
 
   function update({ focusError = false } = {}) {
-    const result = calculateInvestment(readInputValues(new FormData(form).entries()));
+    const rawInputs = readInputValues(new FormData(form).entries());
+    const result = calculateInvestment(rawInputs);
+    snapshot = { inputs: rawInputs, model: result };
     const view = buildResultView(result);
     for (const input of inputs) {
       input.setAttribute('aria-invalid', 'false');
@@ -105,6 +109,7 @@ export function initializeCalculator(scope = document) {
         control.focus();
       } else errorBox.focus();
     }
+    for (const subscriber of subscribers) subscriber(snapshot);
     return result;
   }
 
@@ -141,4 +146,10 @@ export function initializeCalculator(scope = document) {
   window.addEventListener('hashchange', revealLinkedResults);
   update();
   revealLinkedResults();
+  return {
+    getSnapshot: () => snapshot,
+    subscribe(listener) { subscribers.add(listener); return () => subscribers.delete(listener); },
+    refresh: update,
+    revealResults,
+  };
 }

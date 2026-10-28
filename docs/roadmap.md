@@ -1,6 +1,6 @@
 # Development roadmap
 
-The foundation is committed on `main`. The landing page, navigation, calculation engine, and interactive calculator are merged into `develop`. Phase 4 is implemented on `feat/projection-table-chart`, based on that merged baseline: all 30 years, all source financial rows, and a branded Chart.js cash-flow/equity graph and a same-page View results flow. Submission-wide cross-browser QA remains pending. The owner has already deployed `main` (production) and `develop` (preview) on Vercel. The Phase 4 feature branch is authorized for commit/push; its PR and merge into `develop` remain manual. Vercel skips builds for other branches. See [deployment workflow](deployment.md).
+The core calculator, full 30-year projection and Chart.js results flow are implemented. Optional enhancements are implemented locally on `feat/calculator-enhancements`: site-wide themes, the supplied map-pin favicon, complete PDF reports, shareable deals and opt-in contact summaries. The owner manages Vercel `main` production and `develop` preview; feature builds are skipped. This phase does not commit, push, merge or change hosting settings. See [enhancement behavior](enhancements.md) and [deployment workflow](deployment.md).
 
 ## Phase 0: repository foundation
 
@@ -43,10 +43,11 @@ The foundation is committed on `main`. The landing page, navigation, calculation
 - At least one real engine-backed chart, plus equivalent accessible tabular data. The table and chart are mandatory assessment requirements, not optional bonuses.
 - Gate: table/chart/headline agreement, readable mobile scrolling, no whole-page horizontal overflow. See [the implementation and verification record](projection-results.md).
 
-## Phase 5: contact flow and quality assurance
+## Phase 5: demo contact and quality assurance
 
 - Name, email, phone, property address, and message fields.
-- Browser validation and clear demo-only confirmation; do not claim a message was sent without a backend.
+- Browser validation and clear demo-only confirmation are sufficient for this assessment. No working submission backend or real message delivery is required or planned.
+- Optional current-deal inclusion is a read-only browser review, not a sent attachment; preserve the visitor message.
 - Check WCAG AA text contrast, focus states, labels, keyboard behavior, and 16px minimum input/select text.
 - Exercise current Chrome, Safari, Firefox, and Edge when available; record unavailable coverage honestly.
 - Gate: full required-feature checklist, all financial tests, phone and desktop visual review.
@@ -55,5 +56,6 @@ The foundation is committed on `main`. The landing page, navigation, calculation
 
 - Final code/math walkthrough, AI disclosure, run instructions, and known limitations.
 - Existing Vercel hosting uses `main` for production and `develop` for preview. After manual PR merges, verify the exact deployment commit and hosted behavior before submission; do not treat a feature push as a deployment.
-- Only after required features pass: print/PDF styling, shareable inputs, deal summary in the contact flow, or dark mode.
+- Implemented optional enhancements: branded direct PDF download with all inputs/results and both graphs, versioned share links, opt-in deal review in the demo contact form, and persistent light/dark themes.
+- Remaining improvements: physical-device/cross-browser and screen-reader testing, CI browser/PDF checks, offline font hosting and more print navigation. Real contact delivery remains deliberately outside the demo scope.
 - Use focused commits per completed concern, not artificial history or backdated commits.

@@ -28,3 +28,7 @@ The desktop and mobile navigation combine the two latest user-supplied assets fr
 - `intrigue-brand-mark.svg` reuses only the original lime path from that SVG, without changing its path data or fill. A tightly measured viewBox with a small safety margin frames the mark, avoiding duplicate lettering. This image has no color filter.
 
 The result is the supplied PNG's complete lettering, including its descender, followed by the original lime mark (`#9DC31B`). User originals are untouched. The earlier all-white PNG experiment and whole-SVG-only rendering are superseded.
+
+## Updated favicon
+
+`intrigue-map-pin-favicon.png` is a 64px transparent favicon derived from the user-supplied `intrigue-map-pin-logo-removebg-preview.png`, alpha-cropped with padding for small browser tabs. Its original colors and mark are preserved; the external original is unchanged. Brand ownership is unchanged.

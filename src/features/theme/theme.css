@@ -1,0 +1,62 @@
+/* Intrigue's live site uses deep blue-green surfaces, pale text and lime accents.
+   Keep the assessment's original palette and 8px action corners. */
+:root { --control-border: #6d8791; --color-card: #fff; }
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --color-background: #0d1b21; --color-card: #122a33; --color-surface: #172e37;
+  --color-ink: #e2eaec; --color-muted: #a9bdc5; --color-teal: #6fb6cf;
+  --color-border: #355563; --color-error: #ffaaaa; --control-border: #809da8;
+}
+html[data-theme="light"] { color-scheme: light; }
+html .header-bar { background: #1b5063; }
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 44px; height: 44px; padding: 0; border: 1px solid #cce5ed70;
+  border-radius: 50%; background: transparent; color: #fff; cursor: pointer;
+}
+.theme-toggle span { display: flex; }
+.theme-toggle:hover { background: #cce5ed1a; }
+html .menu-toggle, html .menu-toggle:hover { border: 0; }
+html .header-actions { gap: .5rem; }
+html .hero { background: var(--color-background); color: var(--color-ink); }
+html .hero-description, html .hero-reassurance, html .hero-product, html .hero-location { color: var(--color-muted); }
+html .hero-secondary { color: var(--color-teal); }
+html .hero :focus-visible { outline-color: var(--color-teal); }
+html .calculator-form, html .contact-panel, html .projection-charts { background: var(--color-card); }
+html .projection-charts { color: var(--color-ink); border-color: var(--control-border); }
+html .projection-chart-table-link a { color: var(--color-teal); }
+html .projection-charts :focus-visible { outline-color: var(--color-teal); }
+html[data-theme="dark"] .projection-charts button:hover { border-color: var(--color-teal); }
+html .calculator-field input, html .calculator-field select,
+html .form-field input, html .form-field textarea,
+html .projection-table-controls select,
+html .projection-charts select,
+html .calculator-reset {
+  background: var(--color-card); color: var(--color-ink); border-color: var(--control-border);
+}
+html .contact-section { background: var(--color-surface); color: var(--color-ink); }
+html .contact-copy .section-label, html .contact-copy > p:not(.section-label),
+html .contact-alternative a { color: var(--color-teal); }
+html .contact-context { border-color: var(--color-border); }
+html .contact-context .icon { color: var(--color-teal); }
+html .contact-copy :focus-visible { outline-color: var(--color-teal); }
+html .projection-heading h3, html .projection-table-heading h4,
+html .projection-overview-metric [data-result-value], html .projection-glossary dt,
+html .projection-next-step h4, html .projection-invalid, html .projection-unavailable-notes { color: var(--color-ink); }
+html .projection-table th, html .projection-table td { background: var(--color-card); }
+html .projection-table thead th { background: #123a48; color: #fff; }
+html .projection-table .projection-group-row th,
+html .projection-table .projection-group-row td { background: var(--color-surface); color: var(--color-teal); }
+html .projection-table .projection-emphasis th,
+html .projection-table .projection-emphasis td { background: var(--color-surface); color: var(--color-ink); }
+html .calculator-submit-row { background: var(--color-card); border-color: var(--control-border); }
+html .projection-charts button { background: var(--color-card); color: var(--color-ink); border-color: var(--control-border); }
+html .projection-charts button[aria-pressed="true"] { background: #9dc31b; color: #123a48; border-color: #123a48; }
+html .projection-charts [data-chart-selected-value], html .projection-charts h4 { color: var(--color-ink); }
+html .form-feedback { background: var(--color-surface); color: var(--color-ink); }
+html[data-theme="dark"] .calculator-errors { background: #321e25; }
+html[data-theme="dark"] .button--dark { color: #123a48; background: #cce5ed; }
+html[data-theme="dark"] .button--dark:hover { background: #fff; }
+html[data-theme="dark"] .site-footer { background: #09171d; }
+html[data-theme="dark"] .mobile-navigation { background: #122a33; }
+html[data-theme="dark"] .skip-link { background: #cce5ed; }
