@@ -70,15 +70,16 @@ export function runChartControlContrastChecks() {
   const active = getComputedStyle(root.querySelector('[data-chart-metric][aria-pressed="true"]'));
   const inactive = getComputedStyle(root.querySelector('[data-chart-metric][aria-pressed="false"]'));
   const select = getComputedStyle(root.querySelector('[data-chart-year]'));
-  const white = 'rgb(255,255,255)';
+  const surface = getComputedStyle(root).backgroundColor;
+  const activeBoundary = ratio(active.backgroundColor, surface) > ratio(active.borderTopColor, surface) ? active.backgroundColor : active.borderTopColor;
   const pairs = [
     ['selected metric text', active.color, active.backgroundColor, 4.5],
     ['unselected metric text', inactive.color, inactive.backgroundColor, 4.5],
-    ['selected metric boundary', active.borderTopColor, white, 3],
-    ['unselected metric boundary', inactive.borderTopColor, white, 3],
+    ['selected metric boundary', activeBoundary, surface, 3],
+    ['unselected metric boundary', inactive.borderTopColor, surface, 3],
     ['year select text', select.color, select.backgroundColor, 4.5],
-    ['year select boundary', select.borderTopColor, white, 3],
-    ['chart line', globalThis.Chart.getChart(root.querySelector('canvas')).data.datasets[0].borderColor, white, 3],
+    ['year select boundary', select.borderTopColor, surface, 3],
+    ['chart line', globalThis.Chart.getChart(root.querySelector('canvas')).data.datasets[0].borderColor, surface, 3],
   ].map(([name, foreground, background, minimum]) => ({ name, ratio: ratio(foreground, background), minimum }));
   for (const pair of pairs) require(pair.ratio >= pair.minimum, `chart contrast: ${pair.name}`);
   require(active.boxShadow.includes('inset'), 'selected metric has a visible shape cue beyond its lime fill');

@@ -191,3 +191,15 @@
     padding: 2.5rem;
   }
 }
+
+
+.contact-deal-opt-in { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--color-border); }
+.contact-deal-label { display: flex; gap: .75rem; align-items: center; min-height: 44px; color: var(--color-ink); font-size: .875rem; font-weight: 600; cursor: pointer; }
+.contact-deal-label input { width: 20px; height: 20px; flex-shrink: 0; accent-color: var(--color-teal); }
+.contact-deal-review { min-width: 0; margin-top: 1rem; padding: 1rem; border: 1px solid var(--color-border); border-radius: 8px; background: var(--color-surface); }
+.contact-deal-review summary { min-height: 44px; padding-block: .5rem; color: var(--color-teal); cursor: pointer; font-size: .875rem; font-weight: 600; }
+.contact-deal-review h4 { margin: 1.25rem 0 .75rem; font-size: .875rem; }
+.contact-deal-values { display: grid; gap: .75rem; margin: 0; font-size: .8125rem; }
+.contact-deal-values > div { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(0,1fr); gap: .75rem; padding-bottom: .5rem; border-bottom: 1px solid var(--color-border); }
+.contact-deal-values dt { color: var(--color-muted); }
+.contact-deal-values dd { margin: 0; color: var(--color-ink); overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }

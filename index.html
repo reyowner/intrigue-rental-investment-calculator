@@ -6,15 +6,25 @@
   <meta name="description" content="A first look at Intrigue's Rental Property Investment Calculator for Indianapolis-area rental investors. Explore the approach, example assumptions, and next steps.">
   <meta name="theme-color" content="#123A48">
   <title>Rental Property Investment Calculator | Intrigue</title>
+  <script id="theme-bootstrap">
+    (() => {
+      let saved;
+      try { saved = localStorage.getItem('intrigue-theme'); } catch { /* Storage can be disabled. */ }
+      document.documentElement.dataset.theme = saved === 'light' || saved === 'dark'
+        ? saved : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="assets/images/intrigue-favicon.png" type="image/png">
+  <link rel="icon" href="assets/images/intrigue-map-pin-favicon.png" type="image/png">
   <link rel="stylesheet" href="src/styles/global.css">
   <link rel="modulepreload" href="src/main.js">
   <style>
     body { margin: 0; background: #123a48; }
-    body:has(#app[data-startup-state="ready"]) { background: #fff; }
+    body:has(#app[data-startup-state="ready"]) { background: var(--color-background, #fff); }
+    html[data-theme="dark"] { color-scheme: dark; --color-background: #0d1b21; }
+    html[data-theme="light"] { color-scheme: light; }
     .startup-screen { --startup-reveal-delay: 180ms; box-sizing: border-box; min-height: 100vh; min-height: 100svh; padding: clamp(1.5rem, 5vw, 6rem); display: flex; justify-content: center; align-items: center; color: #fff; background: #123a48; font: 1rem/1.65 'Raleway', Arial, sans-serif; text-align: center; }
     .startup-content { display: flex; width: 100%; max-width: 36rem; flex-direction: column; align-items: center; animation: startup-reveal 160ms ease-out var(--startup-reveal-delay) both; }
     .startup-indicator { position: relative; display: grid; place-items: center; width: 112px; height: 112px; margin-bottom: 2rem; }

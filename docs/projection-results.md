@@ -61,7 +61,7 @@ Unavailable returns show **N/A**, numbered markers and accessible references to 
 node --test tests/calculator/*.test.mjs tests/startup.test.mjs tests/check-static.mjs
 ```
 
-The current combined suite passes **138 tests** with Node.js 24.22.1. Coverage includes the independent 49-row fixture over all 30 exact model years, assessment figures, nonzero expenses, sale accounting, null/zero/negative values, no mutation, semantics, safe graph configuration, lazy loading/failure, instance reuse, pending-load races, retry focus and font lifecycle. Financial-engine modules remain unchanged from `develop`.
+The current combined suite passes **165 tests** with Node.js 24.22.1. Coverage includes the independent 49-row fixture over all 30 exact model years, assessment figures, nonzero expenses, sale accounting, null/zero/negative values, no mutation, semantics, safe graph configuration, lazy loading/failure, instance reuse, pending-load races, retry focus and font lifecycle. Financial-engine modules remain unchanged from `develop`.
 
 Run the flow check first on a fresh disposable ready document:
 

@@ -56,3 +56,7 @@ Calculated sRGB contrast for seven key text/surface pairs. All exceeded 4.5:1: d
 ## Coverage limits
 
 Tested in the available Chromium-based automation browser. Safari, Firefox, Edge-specific behavior, assistive-technology behavior, physical touch devices, and a complete accessibility audit have not been verified. Financial figures were not part of those original landing-page checks; they are now covered separately by the Phase 2 engine verification. No form was sent and no deployment was attempted.
+
+## Current optional enhancements
+
+Local Chromium checks cover themes, exact restoration of all 40 shared inputs, opt-in demo deal review, direct PDF Blob/download behavior with no popup or print call, and the existing calculator/table/chart regressions. The actual example download is a 19-page native PDF with embedded Raleway, both graphs and all 1,530 expected projection values. Extracted characters stay within page bounds; representative pages were visually inspected. PDF tests use the real pinned jsPDF/AutoTable renderer, not an HTML screenshot or fake file. See [enhancement behavior and coverage](enhancements.md) for commands, privacy and browser limits. This is local verification, not a deployment or professional audit.

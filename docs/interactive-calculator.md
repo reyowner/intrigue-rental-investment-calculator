@@ -93,4 +93,4 @@ The following mandatory Phase 4 scope is now implemented separately in [long-ter
 3. Add at least one real engine-backed chart with equivalent accessible data.
 4. Verify agreement between headlines, table, chart, and the same calculated model.
 
-Phase 3 originally deferred this UI instead of shipping a placeholder. The current application includes the real table and an engine-backed Chart.js graph with cash-flow/equity controls, revealed through View results while headline estimates remain live. The historical Phase 3 counts above are retained; the current combined Node suite passes 138 tests.
+Phase 3 originally deferred this UI instead of shipping a placeholder. The current application includes the real table and an engine-backed Chart.js graph with cash-flow/equity controls, revealed through View results while headline estimates remain live. The historical Phase 3 counts above are retained; the current combined Node suite passes 165 tests.

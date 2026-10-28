@@ -27,11 +27,14 @@
 }
 
 .site-header .brand {
-  --header-logo-width: 8.25rem;
+  --header-logo-width: 5.75rem;
   display: inline-flex;
   align-items: flex-start;
   flex-shrink: 0;
   min-height: 2.75rem;
+  margin-left: 0.5rem;
+  /* Center the complete lockup optically without lowering its lime mark alone. */
+  padding-block: 0.5625rem 0.4375rem;
   text-decoration: none;
 }
 
@@ -215,7 +218,7 @@ html.navigation-open body {
   }
 
   .site-header .brand {
-    --header-logo-width: 9rem;
+    --header-logo-width: 6.5rem;
     justify-self: start;
   }
 

@@ -73,8 +73,28 @@ await chart.runChartResultsChecks();
 chart.runChartControlContrastChecks();
 ```
 
-The library is an actual local Chart.js 4.6.1 instance, not a mocked graph. Inspect it through `Chart.getChart(document.querySelector('[data-projection-canvas]'))`; dataset `rawValues` must match the current engine years. The selected metric/year are native controls, and inspecting a year provides a visible amount outside Canvas. The table remains the full accessible equivalent.
+The library is an actual local Chart.js 4.6.1 instance, not a mocked graph. Inspect it through `Chart.getChart(document.querySelector('[data-projection-charts] canvas'))`; dataset `rawValues` must match the current engine years. The selected metric/year are native controls, and inspecting a year provides a visible amount outside Canvas. The table remains the full accessible equivalent.
 
 Exercise delayed loading with an invalid-to-valid edit before the asset finishes. Verify loading status is restored and the final graph uses the latest deal. Block the local vendor request to verify table fallback; unblock it and activate Retry chart with native Enter. Failed retry must retain retry focus, while success must move focus to the selected metric only when retry still had focus.
 
 Check actual resized canvas geometry, hover tooltip content, selected metric contrast/shape, and font readiness. Settle smooth/native scrolling and confirm hover coordinates hit the canvas with `elementFromPoint` before diagnosing a missing tooltip. Run visual/keyboard animation probes in a foreground tab and restore all request blocking, throttling and reduced-motion emulation afterward.
+
+
+## Theme, sharing, contact deal review and complete PDF
+
+In a disposable ready document:
+
+```js
+const theme = await import('/tests/browser/theme-enhancements.mjs');
+await theme.runThemeChecks();
+const tools = await import('/tests/browser/deal-tools.mjs');
+await tools.runDealToolsChecks();
+tools.runContactDealChecks();
+await tools.runReportActionChecks();
+```
+
+The report action runner now invokes the direct-download check in `pdf-download.mjs`. It detects any unexpected popup/print calls and observes the actual PDF Blob while allowing the real download anchor to run. Configure a test-owned download directory through `Browser.setDownloadBehavior`, then inspect the saved `.pdf` signature, filename, extracted table values and rendered pages. Do not substitute print invocation, an HTML preview or a mocked file for the real downloadable artifact. The pinned local PDF libraries are app assets, not an npm/build requirement.
+
+For color checks, first reveal the results and wait for the actual chart to be ready, then run `theme.runThemeContrastChecks()` and the existing chart-control contrast check in **both** themes. Compare controls against their actual surface, not a hardcoded white background. Filled active buttons can have sufficient fill/surface boundary contrast even when their border matches a dark card.
+
+Run the existing snapshot runner only in the disposable `work/qa/enhancement-fixture.html`; it intentionally replaces that fixture DOM. Shared-link restoration must also be checked through a fresh navigation with all 40 raw strings, not by testing encode/decode in isolation. Verify malformed links leave current values unchanged and do not import contact details. See [enhancement verification](../../docs/enhancements.md).

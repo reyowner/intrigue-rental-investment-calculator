@@ -15,8 +15,11 @@ export function chartDollars(value, compact = false) {
 }
 
 /** Display scaling only. Raw engine amounts remain intact for inspection/tooltips. */
-export function buildProjectionChartConfig(model, metric = 'annualCashFlow', selectedYear = 1) {
+export function buildProjectionChartConfig(model, metric = 'annualCashFlow', selectedYear = 1, theme = 'light') {
   if (!isProjectionChartModel(model) || !CHART_METRICS[metric]) throw new TypeError('Invalid projection chart model or metric');
+  const palette = theme === 'dark'
+    ? { ink: '#E7F1F5', line: '#9DC31B', tick: '#CCE5ED', grid: '#355763' }
+    : { ink: '#123A48', line: '#1B5063', tick: '#1B5063', grid: '#CCE5ED' };
   const rawValues = model.years.map(row => row[metric]);
   const magnitude = Math.max(...rawValues.map(Math.abs));
   const scale = magnitude > 1e100 || (magnitude > 0 && magnitude < 1e-100) ? magnitude : 1;
@@ -28,14 +31,14 @@ export function buildProjectionChartConfig(model, metric = 'annualCashFlow', sel
   return {
     type: 'line',
     data: { labels: model.years.map(row => row.year), datasets: [{
-      label: CHART_METRICS[metric], rawValues, data, borderColor: '#1B5063', borderWidth: 2.5,
+      label: CHART_METRICS[metric], rawValues, data, borderColor: palette.line, borderWidth: 2.5,
       pointBackgroundColor: '#9DC31B', pointBorderColor: '#123A48',
       pointRadius: data.map((_, i) => i === selectedYear - 1 ? 5 : 0),
       pointHoverRadius: 6, pointHitRadius: 12, tension: .18, fill: false, clip: false,
     }] },
     options: {
       projectionMetric: metric, projectionScale: scale, animation: false, responsive: true,
-      maintainAspectRatio: false, color: '#123A48', font,
+      maintainAspectRatio: false, color: palette.ink, font,
       interaction: { mode: 'index', intersect: false },
       plugins: { legend: { display: false }, tooltip: {
         backgroundColor: '#123A48', titleFont: font, bodyFont: font,
@@ -43,13 +46,13 @@ export function buildProjectionChartConfig(model, metric = 'annualCashFlow', sel
           label: context => `${CHART_METRICS[metric]}: ${chartDollars(context.dataset.rawValues[context.dataIndex])}` },
       } },
       scales: {
-        x: { title: { display: true, text: 'Year', font }, grid: { display: false },
-          ticks: { font, color: '#1B5063', autoSkip: false, maxRotation: 0,
+        x: { title: { display: true, text: 'Year', color: palette.ink, font }, grid: { display: false },
+          ticks: { font, color: palette.tick, autoSkip: false, maxRotation: 0,
             callback: (_, index) => [0, 4, 9, 14, 19, 24, 29].includes(index) ? index + 1 : null } },
-        y: { min: low, max: high, title: { display: true, text: 'Dollars ($)', font },
-          grid: { color: context => context.tick.value === 0 ? '#1B5063' : '#CCE5ED',
+        y: { min: low, max: high, title: { display: true, text: 'Dollars ($)', color: palette.ink, font },
+          grid: { color: context => context.tick.value === 0 ? palette.tick : palette.grid,
             lineWidth: context => context.tick.value === 0 ? 1.5 : 1 },
-          ticks: { font, color: '#1B5063', maxTicksLimit: 6,
+          ticks: { font, color: palette.tick, maxTicksLimit: 6,
             callback: value => value !== 0 && value * scale === 0 ? null : chartDollars(value * scale, true) } },
       },
     },
