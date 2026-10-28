@@ -1,0 +1,16 @@
+:root {
+  --color-dark-teal: #123a48;
+  --color-teal: #1b5063;
+  --color-lime: #9dc31b;
+  --color-light-teal: #cce5ed;
+  --color-ink: #123a48;
+  --color-muted: #51656d;
+  --color-background: #ffffff;
+  --color-surface: #f3f7f8;
+  --color-border: #d7e1e4;
+  --color-error: #a12d2d;
+  --font-family: 'Raleway', Arial, sans-serif;
+  --button-radius: 8px;
+  --page-gutter: clamp(1.25rem, 5vw, 6rem);
+  --section-space: clamp(4rem, 7vw, 7rem);
+}

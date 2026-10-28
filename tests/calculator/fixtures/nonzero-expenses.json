@@ -1,0 +1,126 @@
+{
+  "description": "Synthetic cash-purchase fixture, not a source property. Expected expense values computed independently with Python Decimal, without importing the JavaScript engine.",
+  "inputs": {
+    "purchasePrice": 100000,
+    "afterRepairValue": 150000,
+    "renovationCost": 10000,
+    "downPaymentPercent": 100,
+    "interestRatePercent": 0,
+    "loanTermYears": 10,
+    "monthlyRent": 1000,
+    "monthlyPropertyTaxes": 100,
+    "monthlyInsurance": 50,
+    "monthlyHoa": 25,
+    "vacancyPercent": 10,
+    "maintenancePercent": 5,
+    "managementPercent": 10,
+    "monthlyUtilities": {
+      "electricity": 10,
+      "fuelOil": 20,
+      "gas": 30,
+      "sewer": 40,
+      "telephone": 50,
+      "water": 60,
+      "other": 70
+    },
+    "annualMiscellaneous": {
+      "accounting": 10,
+      "advertising": 20,
+      "janitorial": 30,
+      "lawnSnow": 40,
+      "legal": 50,
+      "licenses": 60,
+      "miscellaneous": 70,
+      "residentSuperintendent": 80,
+      "supplies": 90,
+      "trashRemoval": 100
+    },
+    "rentGrowthPercent": 10,
+    "propertyTaxGrowthPercent": 20,
+    "insuranceGrowthPercent": 30,
+    "hoaGrowthPercent": 40,
+    "utilitiesGrowthPercent": 50,
+    "miscellaneousGrowthPercent": 60,
+    "buildingPercent": 80,
+    "appreciationPercent": 5,
+    "buyingClosingPercent": 2,
+    "sellingClosingPercent": 7
+  },
+  "expectedYears": [
+    {
+      "year": 1,
+      "grossRent": 12000.0,
+      "operatingIncome": 10800.0,
+      "expenses": {
+        "propertyTaxes": 1200.0,
+        "insurance": 600.0,
+        "hoa": 300.0,
+        "utilities": {
+          "electricity": 120.0,
+          "fuelOil": 240.0,
+          "gas": 360.0,
+          "sewer": 480.0,
+          "telephone": 600.0,
+          "water": 720.0,
+          "other": 840.0
+        },
+        "miscellaneous": {
+          "accounting": 10.0,
+          "advertising": 20.0,
+          "janitorial": 30.0,
+          "lawnSnow": 40.0,
+          "legal": 50.0,
+          "licenses": 60.0,
+          "miscellaneous": 70.0,
+          "residentSuperintendent": 80.0,
+          "supplies": 90.0,
+          "trashRemoval": 100.0
+        },
+        "maintenance": 600.0,
+        "management": 1080.0,
+        "utilitiesTotal": 3360.0,
+        "miscellaneousTotal": 550.0,
+        "total": 7690.0
+      },
+      "noi": 3110.0
+    },
+    {
+      "year": 2,
+      "grossRent": 13200.0,
+      "operatingIncome": 11880.0,
+      "expenses": {
+        "propertyTaxes": 1440.0,
+        "insurance": 780.0,
+        "hoa": 420.0,
+        "utilities": {
+          "electricity": 180.0,
+          "fuelOil": 360.0,
+          "gas": 540.0,
+          "sewer": 720.0,
+          "telephone": 900.0,
+          "water": 1080.0,
+          "other": 1260.0
+        },
+        "miscellaneous": {
+          "accounting": 16.0,
+          "advertising": 32.0,
+          "janitorial": 48.0,
+          "lawnSnow": 64.0,
+          "legal": 80.0,
+          "licenses": 96.0,
+          "miscellaneous": 112.0,
+          "residentSuperintendent": 128.0,
+          "supplies": 144.0,
+          "trashRemoval": 160.0
+        },
+        "maintenance": 660.0,
+        "management": 1188.0,
+        "utilitiesTotal": 5040.0,
+        "miscellaneousTotal": 880.0,
+        "total": 10408.0
+      },
+      "noi": 1472.0
+    }
+  ],
+  "depreciableBasis": 88000.0
+}

@@ -1,6 +1,6 @@
 # Development roadmap
 
-Only Phase 0 is authorized for the initial commit. Each later phase needs user direction before implementation or another GitHub push. Do not deploy as part of the foundation.
+The foundation is committed on `main`. The landing page, navigation, calculation engine, and interactive calculator are merged into `develop`. Phase 4 is implemented on `feat/projection-table-chart`, based on that merged baseline: all 30 years, all source financial rows, and a branded Chart.js cash-flow/equity graph and a same-page View results flow. Submission-wide cross-browser QA remains pending. The owner has already deployed `main` (production) and `develop` (preview) on Vercel. The Phase 4 feature branch is authorized for commit/push; its PR and merge into `develop` remain manual. Vercel skips builds for other branches. See [deployment workflow](deployment.md).
 
 ## Phase 0: repository foundation
 
@@ -26,7 +26,7 @@ Only Phase 0 is authorized for the initial commit. Each later phase needs user d
 - Fixed-rate monthly amortization, annual growth starting Year 2, sale proceeds, capped depreciation, and annual-sale IRR.
 - Test every supplied check figure, zero interest, early payoff, zero cash/property value, blank/negative inputs, and non-finite values.
 - Return an explicit unavailable state for undefined ratios or unsolvable/ambiguous IRR, not a fabricated zero.
-- Gate: automated check-figure and edge-case tests; document policy choices.
+- Gate: automated check-figure and edge-case tests; document policy choices. See [the engine API and verification record](calculator-engine.md).
 
 ## Phase 3: interactive calculator and headline results
 
@@ -34,14 +34,14 @@ Only Phase 0 is authorized for the initial commit. Each later phase needs user d
 - All workbook defaults, seven utilities, ten miscellaneous lines, and new 3% insurance/HOA growth fields.
 - Visible labels, short explanations, owner-paid utility guidance, and read-only derived values.
 - Live updates, graceful field validation, five required headline results.
-- Gate: exercise every input group and error state without stale or misleading results.
+- Gate: exercise every input group and error state without stale or misleading results. See [interactive calculator verification](interactive-calculator.md).
 
-## Phase 4: long-term results
+## Phase 4: required long-term results, implemented
 
 - Complete 30-year projection including individual expense lines and source-mapped supplementary rows.
 - Phone-usable horizontal table with clear row/year orientation and keyboard access.
-- At least one chart, plus equivalent accessible tabular data.
-- Gate: table/chart/headline agreement, readable mobile scrolling, no whole-page horizontal overflow.
+- At least one real engine-backed chart, plus equivalent accessible tabular data. The table and chart are mandatory assessment requirements, not optional bonuses.
+- Gate: table/chart/headline agreement, readable mobile scrolling, no whole-page horizontal overflow. See [the implementation and verification record](projection-results.md).
 
 ## Phase 5: contact flow and quality assurance
 
@@ -54,6 +54,6 @@ Only Phase 0 is authorized for the initial commit. Each later phase needs user d
 ## Phase 6: submission and optional enhancements
 
 - Final code/math walkthrough, AI disclosure, run instructions, and known limitations.
-- With separate authorization, deploy and verify the hosted site.
+- Existing Vercel hosting uses `main` for production and `develop` for preview. After manual PR merges, verify the exact deployment commit and hosted behavior before submission; do not treat a feature push as a deployment.
 - Only after required features pass: print/PDF styling, shareable inputs, deal summary in the contact flow, or dark mode.
 - Use focused commits per completed concern, not artificial history or backdated commits.
