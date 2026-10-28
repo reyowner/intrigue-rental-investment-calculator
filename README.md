@@ -18,6 +18,9 @@ node --test tests/calculator/*.test.mjs tests/*.test.mjs tests/check-static.mjs
 
 ## Decisions
 
+- **GitHub-first, feature-based structure:** I started with the repository and project foundation before adding features. I organized feature-specific code under `src/features/` and shared UI under `src/components/` so I can quickly find a section, understand its responsibilities and make manual changes without searching through unrelated code.
+- **Phased development:** I split the work into the foundation and page layout, calculation engine, interactive inputs, projection table/charts, and optional enhancements. This gave me smaller checkpoints to personally review the output, request refinements and verify behavior before moving to the next phase.
+- **Logo sourcing:** the assessment did not provide a downloadable Intrigue logo file, so I searched online for the existing logo and used it for this assessment rather than inventing a new brand identity. I did not design the logo or claim ownership of it; Intrigue's branding remains the property of its respective owners.
 - **One engine:** all 40 inputs, headline/financing figures, charts and the full 30-year table use the same model. Calculations remain live; View results reveals the detailed report.
 - **Source authority:** the assessment brief overrides known workbook errors. Defaults come from Intrigue's duplex example; the original workbook is not committed. See [calculation notes](docs/calculation-notes.md).
 - **Light/dark mode:** follows the OS until explicitly chosen. Only the theme preference is stored automatically. Brand colors, Raleway and 8px action corners remain.
@@ -37,4 +40,10 @@ Vercel uses `main` for production and `develop` for preview, skipping feature-br
 
 With more time: physical-device/cross-browser and screen-reader checks, browser/PDF regressions in CI, offline font assets, and further print navigation/pagination refinements.
 
-Detailed [technical decisions](docs/technical-overview.md), [architecture](docs/architecture.md) and [roadmap](docs/roadmap.md) remain in `docs/`. AI assistance through Hermes Agent by Nous Research supported implementation and verification; the submitting developer remains responsible for reviewing and explaining the work. Supplied brand assets retain their owners' rights; no application-wide open-source license is assigned.
+## AI assistance
+
+I used **Hermes Agent by Nous Research** as my main AI coding tool, running **GPT-6.1 Sol** (`gpt-6.1-sol`) through the **OpenAI Codex provider**. I used it to help plan the phases and file structure, draft and refine implementation code, investigate calculation rules and edge cases, write and run automated/browser checks, and update documentation.
+
+I set the requirements and made the final decisions on scope, organization and UI behavior, reviewing the output in stages and requesting changes where needed. AI-assisted implementation and reviews do not replace my responsibility for every submitted line of code. I am responsible for reviewing and understanding the implementation and being prepared to walk through the code and explain the financial calculations. The linked engine and calculation notes document the formulas, assumptions and verification evidence.
+
+Detailed [technical decisions](docs/technical-overview.md), [architecture](docs/architecture.md) and [roadmap](docs/roadmap.md) remain in `docs/`. Supplied and externally sourced brand assets retain their owners' rights; no application-wide open-source license is assigned.
