@@ -75,7 +75,10 @@ test('calculator renders actual engine-backed inputs/results while contact remai
   assert.equal((markup.match(/<input /g) || []).length, 40);
   assert.match(markup, /7\.11%/);
   assert.match(markup, /5\.45%/);
-  assert.match(markup, /30-year projection table and chart/);
+  assert.match(markup, /data-projection-table/);
+  assert.match(markup, /aria-controls="projection"/);
+  assert.match(markup, /data-view-results/);
+  assert.doesNotMatch(markup, /planned for the next development phase/);
   assert.doesNotMatch(markup, /preview is not interactive|No results are calculated/);
   assert.match(contact, /nothing has been sent to Intrigue/);
   assert.doesNotMatch(contact, /fetch\(|XMLHttpRequest|localStorage|sessionStorage|console\.log/);

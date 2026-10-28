@@ -127,7 +127,7 @@ Run from the repository root, using Node.js 24.22.1 as tested:
 node --test tests/calculator/*.test.mjs tests/startup.test.mjs tests/check-static.mjs
 ```
 
-The engine phase recorded **102 tests passed, zero failed**. The current combined suite includes UI adapters and has **113 passing tests**. Engine-phase coverage includes:
+The engine phase recorded **102 tests passed, zero failed**. The current combined suite includes UI and projection presenters and has **138 passing tests**. Engine-phase coverage includes:
 
 - Every supplied assessment check figure, including Year 1, Year 5, Year 10, and Year 30 figures and all five headlines.
 - Numeric defaults mapped to workbook cells, including the intentional 10% management override and the two added growth inputs.
@@ -141,4 +141,4 @@ The engine phase recorded **102 tests passed, zero failed**. The current combine
 
 A read-only, fresh-context AI-assisted follow-up review reported no reproducible defects within its coverage. It independently exercised the original repeated-root regressions, 2,664 exact known-factor cases, and 114 additional coefficient-scaling, zero-padding, and extreme-discount-factor cases. Both root classification and computed IRR were checked. Constructed coefficients stayed within exact integer bounds; 593 generator candidates outside the degree/safe-integer limits were skipped rather than treated as reliable oracles. The 16,384-bit arithmetic-budget boundary and arbitrary extreme IEEE-754 coefficient mixtures were not exhaustively tested.
 
-Coverage limits: this is not a proof over every floating-point input. Safari, Firefox, Edge-specific, physical-device, and assistive-technology testing have not been performed for this phase. Live UI integration and field behavior are now covered separately in [the Phase 3 verification record](interactive-calculator.md). Projection-table/chart rendering and deployment remain later work. Publishing the feature branch is a separately authorized Git operation, not a deployment or a merge into `develop` or `main`.
+Coverage limits: this is not a proof over every floating-point input. Safari, Firefox, Edge-specific, physical-device, and assistive-technology testing have not been performed for this phase. Live UI integration and field behavior are now covered separately in [the Phase 3 verification record](interactive-calculator.md). Projection-table/chart rendering is now implemented separately; see [the Phase 4 record](projection-results.md). The owner has already deployed `main` (production) and `develop` (preview) on Vercel. Hosted verification and release of this feature remain separate from local engine verification; see [deployment workflow](deployment.md). Publishing the feature branch is a separately authorized Git operation, not a deployment or a merge into `develop` or `main`.

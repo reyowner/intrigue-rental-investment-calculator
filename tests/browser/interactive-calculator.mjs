@@ -65,6 +65,8 @@ export async function runCalculatorChecks() {
   check('every accessible input label includes its unit', fields.every(field => form.elements.namedItem(field.name).labels[0].textContent.includes(spokenUnits[field.unit])));
   advanced.open = true;
   for (const field of fields) {
+    // Yield between scenarios so large real-table runs do not monopolize the browser task.
+    await new Promise(resolve => setTimeout(resolve, 0));
     await reset();
     const input = change(field.name, '');
     check(`blank field clears all results: ${field.name}`, input.getAttribute('aria-invalid') === 'true'
@@ -116,7 +118,7 @@ export async function runCalculatorChecks() {
     && [...workspace.querySelectorAll('[data-result-reason]')].every(node => node.hidden));
   check('reset retains disclosure openness', advanced.open);
   advanced.open = false;
-  check('mandatory table and chart are explicitly planned next', workspace.querySelector('.calculator-next-phase').textContent.includes('30-year projection table and chart'));
+  check('detailed results are available through the explicit results action', workspace.querySelector('[data-view-results]').getAttribute('aria-controls') === 'projection' && workspace.querySelector('[data-projection-table]') && workspace.querySelector('[data-projection-charts]'));
   check('results have a polite live status', workspace.querySelector('[data-calculator-announcement]').getAttribute('aria-live') === 'polite');
   check('source defaults are unchanged', DEFAULT_INPUTS.monthlyUtilities.water === 0 && DEFAULT_INPUTS.monthlyRent === 2400);
   return { checks, total: checks.length };
@@ -245,6 +247,7 @@ export async function runCalculatorRefinementChecks() {
     return target && target.tagName === 'LEGEND' && target.tabIndex === -1;
   }));
   for (const field of allFields) {
+    await new Promise(resolve => setTimeout(resolve, 0));
     const input = form.elements.namedItem(field.name);
     input.value = String(Number(field.value) + 1);
     input.dispatchEvent(new Event('input', { bubbles: true }));

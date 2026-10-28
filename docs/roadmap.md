@@ -1,6 +1,6 @@
 # Development roadmap
 
-The foundation is committed on `main`. The landing page, navigation, and calculation engine are merged into `develop`. Phase 3 is implemented on `feat/interactive-calculator`, branched from that merged development baseline. It includes all inputs and live headline results. Phase 4 remains required: the complete 30-year projection table and at least one chart. Later phases are not implemented. Merging this feature branch and deployment are handled separately.
+The foundation is committed on `main`. The landing page, navigation, calculation engine, and interactive calculator are merged into `develop`. Phase 4 is implemented on `feat/projection-table-chart`, based on that merged baseline: all 30 years, all source financial rows, and a branded Chart.js cash-flow/equity graph and a same-page View results flow. Submission-wide cross-browser QA remains pending. The owner has already deployed `main` (production) and `develop` (preview) on Vercel. The Phase 4 feature branch is authorized for commit/push; its PR and merge into `develop` remain manual. Vercel skips builds for other branches. See [deployment workflow](deployment.md).
 
 ## Phase 0: repository foundation
 
@@ -36,12 +36,12 @@ The foundation is committed on `main`. The landing page, navigation, and calcula
 - Live updates, graceful field validation, five required headline results.
 - Gate: exercise every input group and error state without stale or misleading results. See [interactive calculator verification](interactive-calculator.md).
 
-## Phase 4: required long-term results, next phase
+## Phase 4: required long-term results, implemented
 
 - Complete 30-year projection including individual expense lines and source-mapped supplementary rows.
 - Phone-usable horizontal table with clear row/year orientation and keyboard access.
 - At least one real engine-backed chart, plus equivalent accessible tabular data. The table and chart are mandatory assessment requirements, not optional bonuses.
-- Gate: table/chart/headline agreement, readable mobile scrolling, no whole-page horizontal overflow.
+- Gate: table/chart/headline agreement, readable mobile scrolling, no whole-page horizontal overflow. See [the implementation and verification record](projection-results.md).
 
 ## Phase 5: contact flow and quality assurance
 
@@ -54,6 +54,6 @@ The foundation is committed on `main`. The landing page, navigation, and calcula
 ## Phase 6: submission and optional enhancements
 
 - Final code/math walkthrough, AI disclosure, run instructions, and known limitations.
-- With separate authorization, deploy and verify the hosted site.
+- Existing Vercel hosting uses `main` for production and `develop` for preview. After manual PR merges, verify the exact deployment commit and hosted behavior before submission; do not treat a feature push as a deployment.
 - Only after required features pass: print/PDF styling, shareable inputs, deal summary in the contact flow, or dark mode.
 - Use focused commits per completed concern, not artificial history or backdated commits.

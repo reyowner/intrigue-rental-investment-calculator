@@ -2,7 +2,7 @@
 
 ## Scope
 
-The Phase 1 landing-page checks below are retained as a historical record. Phase 2 added an independently callable financial engine, recorded in [calculator-engine.md](calculator-engine.md). Phase 3 now replaces the preview with live controls and headline results; see [interactive-calculator.md](interactive-calculator.md) for its current verification. The rendered projection table/chart, hosting, and real contact delivery are still not included.
+The Phase 1 landing-page checks below are retained as a historical record. Phase 2 added an independently callable financial engine, recorded in [calculator-engine.md](calculator-engine.md). Phase 3 now replaces the preview with live controls and headline results; see [interactive-calculator.md](interactive-calculator.md) for its current verification. Phase 4 adds the complete rendered projection table and charts; see [projection-results.md](projection-results.md) for current tests, browser evidence, and limits. The owner has since configured Vercel production/preview hosting; the historical checks below are local checks, not verification of the current hosted releases. See [deployment workflow](deployment.md). Real contact delivery remains excluded.
 
 ## Automated source checks
 
