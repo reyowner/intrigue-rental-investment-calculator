@@ -93,7 +93,7 @@ The engine also supplies the workbook's supplementary rows, with corrected sale 
 - Annualized return (59): `(effectiveFutureValue / totalCashRequired) ** (1 / year) - 1`. It treats cumulative distributions as ending wealth, unlike time-weighted annual cash flows in IRR, and is unavailable for negative ending wealth or zero initial cash.
 - ROI (61): `(effectiveFutureValue - totalCashRequired) / totalCashRequired`.
 
-`netSaleProceeds` excludes the current year's operating cash flow; `cashFlowWithSale` includes it once. These supplementary definitions are explicit implementation choices where the brief does not fully define a workbook row. Present them distinctly when Phase 4 renders the table.
+`netSaleProceeds` excludes the current year's operating cash flow; `cashFlowWithSale` includes it once. These supplementary definitions are explicit implementation choices where the brief does not fully define a workbook row. The Phase 4 table presents them distinctly with row explanations and two added sale-accounting breakdowns. See [the projection UI guide](projection-results.md).
 
 ## Acceptance fixtures from the brief, verified by the engine
 

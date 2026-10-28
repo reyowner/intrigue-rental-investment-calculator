@@ -4,7 +4,7 @@
 
 The landing-page preview is replaced with a browser-only form connected to the existing calculation engine. There is no second implementation of the financial formulas, backend, framework, package installation, or build step.
 
-Implemented on `feat/interactive-calculator`, based on `develop` after the engine PR was merged. The changes are isolated to this feature branch; merging and deployment are handled separately.
+Phase 3 was implemented on `feat/interactive-calculator` and merged into `develop`. Phase 4 continues separately on `feat/projection-table-chart`; its publishing and deployment require separate authorization.
 
 ## Complete input coverage
 
@@ -23,7 +23,7 @@ The utilities explanation is included verbatim:
 
 > Only enter utilities the owner pays while a tenant is in place. Vacancy already accounts for the rest. Leave utilities out if the tenant reimburses them.
 
-Some advanced assumptions affect later annual rows or IRR rather than the five current headline results. They are still included in each full model calculation, not discarded because the table is not displayed yet.
+Some advanced assumptions affect later annual rows or IRR rather than the five headline results. Phase 3 included them in the complete model; Phase 4 now exposes those effects in the detailed table and charts. See [long-term results](projection-results.md).
 
 ## Source-aware page copy
 
@@ -84,13 +84,13 @@ A fresh-context AI-assisted review independently exercised all 40 fields through
 
 Limits: available Chromium-based automation and touch emulation are not physical iPhone/Safari, Firefox, Edge-specific, screen-reader, or complete WCAG conformance testing. Exact browser assertions and color-pair checks do not guarantee future investment performance.
 
-## Required next phase
+## Phase 4 follow-up
 
-Phase 4 is mandatory, not a bonus:
+The following mandatory Phase 4 scope is now implemented separately in [long-term results](projection-results.md):
 
 1. Render the complete 30-year projection, including every individual expense line, mortgage and depreciation detail, equity/sale figures, cumulative cash flow, and annual returns/IRR.
 2. Keep the table usable on a phone, with clear year/row orientation and keyboard-accessible horizontal scrolling rather than whole-page overflow.
 3. Add at least one real engine-backed chart with equivalent accessible data.
 4. Verify agreement between headlines, table, chart, and the same calculated model.
 
-No placeholder chart or claimed completed projection UI is included in Phase 3.
+Phase 3 originally deferred this UI instead of shipping a placeholder. The current application includes the real table and an engine-backed Chart.js graph with cash-flow/equity controls, revealed through View results while headline estimates remain live. The historical Phase 3 counts above are retained; the current combined Node suite passes 138 tests.

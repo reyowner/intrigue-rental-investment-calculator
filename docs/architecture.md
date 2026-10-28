@@ -23,14 +23,17 @@ src/
       sections/
         hero/            Hero copy, actions, property image
         how-it-works/    Three-step explanation
-        calculator-intro/ Calculator section wrapper, composes preview feature
+        calculator-intro/ Calculator section wrapper, composes the live calculator
         contact/         Contact markup, styles, local validation
     calculator/
       engine.js          Public pure calculation entry, no DOM or side effects
       calculator-controller.js  Native form events, validation, and live result updates
-      constants/         Numeric defaults and complete input labels/helpers
+      projection-controller.js Stable table updates and results reveal
+      projection-chart-controller.js Lazy Chart.js lifecycle and native controls
+      services/          Pinned local chart-library loading
+      constants/         Numeric defaults, input helpers, source projection-row mapping
       utils/             Financial engine functions plus input/presentation adapters
-      components/        Calculator form, derived totals, headline markup and styles
+      components/        Form, summaries, complete table, Chart.js card and styles
   pages/homepage.js
   styles/
     tokens.css           Exact assessment brand tokens and shared spacing
@@ -58,8 +61,8 @@ The calculator feature exposes `calculateInvestment()` from `engine.js`. Financi
 
 The page composes `calculator()` and initializes `initializeCalculator(root)` after mounting. `constants/input-fields.js` defines every control and helper, obtaining numeric defaults from the engine's frozen defaults. `utils/input-values.js` preserves raw form values for engine validation; `utils/result-view.js` formats successful models and explicit N/A states. The controller updates text and error attributes without replacing focused inputs, so caret, disclosure state, and entered values survive recalculation. The unused preview-only components and formatted defaults have been removed.
 
-The next phase will render the mandatory projection table and chart from the existing annual model. Keep those responsibilities in calculator feature components, not the homepage or a second financial implementation. See [the UI guide](interactive-calculator.md).
+The calculator passes the same successful or invalid result to `projection-controller.js`. Source-mapped table rows and a Chart.js metric-switching card read existing annual values; no financial formulas are duplicated. View results reveals the same-page report while headlines stay live. The pinned local bundle loads only on reveal. Table/chart controls remain stable during edits; invalid models clear displays and destroy the chart. Retry is isolated from app startup, and no framework/build step was introduced. See [long-term result ownership and verification](projection-results.md).
 
 The contact form is local-only. It validates but never sends or persists details. Adding a real submission service is a separately scoped change requiring truthful status copy and explicit authorization.
 
-No hosting, analytics, trackers, cookies, theme switching, or optional calculator bonuses were added.
+The owner has configured Vercel hosting for `main` (production) and `develop` (preview), with other branch builds skipped. See [deployment workflow](deployment.md). This feature does not change hosting settings or add analytics, trackers, cookies, theme switching, or optional calculator bonuses.
