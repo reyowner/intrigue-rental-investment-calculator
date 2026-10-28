@@ -1,8 +1,8 @@
-# Landing-page verification
+# Verification record
 
 ## Scope
 
-Phase 1 only: landing-page design, feature-based organization, navigation, calculator preview, and local contact validation. The financial engine, real calculator controls/results, 30-year table, chart, hosting, and real contact delivery are not included.
+The Phase 1 landing-page checks below are retained as a historical record. Phase 2 adds an independently callable financial engine, without changing or connecting the visible preview. Current engine tests, browser module checks, and financial coverage limits are recorded in [calculator-engine.md](calculator-engine.md). Real calculator controls/results, rendered projection table/chart, hosting, and real contact delivery are still not included.
 
 ## Automated source checks
 
@@ -12,7 +12,7 @@ Run from the repository root:
 node --test tests/check-static.mjs
 ```
 
-Eight source checks passed: JavaScript syntax, relative module imports, CSS imports, document assets, template images, brand tokens/radius, copy restrictions, and honest preview/form states. These source checks do not replace browser testing or financial validation.
+Eight source checks passed during the original landing-page verification: JavaScript syntax, relative module imports, CSS imports, document assets, template images, brand tokens/radius, copy restrictions, and honest preview/form states. These source checks do not replace browser testing or financial validation.
 
 ## Browser checks performed
 
@@ -55,4 +55,4 @@ Calculated sRGB contrast for seven key text/surface pairs. All exceeded 4.5:1: d
 
 ## Coverage limits
 
-Tested in the available Chromium-based automation browser. Safari, Firefox, Edge-specific behavior, assistive-technology behavior, physical touch devices, and a complete accessibility audit have not been verified. No financial check figures have been calculated or validated in this phase. No form was sent and no deployment was attempted.
+Tested in the available Chromium-based automation browser. Safari, Firefox, Edge-specific behavior, assistive-technology behavior, physical touch devices, and a complete accessibility audit have not been verified. Financial figures were not part of those original landing-page checks; they are now covered separately by the Phase 2 engine verification. No form was sent and no deployment was attempted.

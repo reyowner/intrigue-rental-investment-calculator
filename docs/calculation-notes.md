@@ -2,7 +2,9 @@
 
 ## Authority and review status
 
-The supplied assessment brief overrides workbook formulas and cached results. The local workbook was inspected read-only through its XLSX XML, including both tabs' labels, summary inputs, and early-year projection formulas/cached values. This is source mapping, not a completed 30-year formula audit or an independently validated calculation engine. The original workbook is not modified or committed.
+The supplied assessment brief overrides workbook formulas and cached results. Both tabs were inspected read-only through the XLSX XML. Shared formulas were resolved across the full 30-year Financial Analysis projection, including loan payoff and the final partial depreciation year. Numeric defaults are covered by a cell-mapped source fixture; calculations are tested against the brief and independent fixtures rather than copied cached totals. The original workbook remains unchanged and is not committed.
+
+The audited workbook SHA-256 is `47c44b8acb623b30f4097eb06dba11f085f3b836e36a88d0da755c5a12b149c2`; a post-implementation hash check matched it. Local audit scripts and evidence remain in ignored `work/financial-source-review/`. See [the engine API](calculator-engine.md) for contracts and verification limits.
 
 The workbook has `Financial Summary` and `Financial Analysis` tabs. Workbook percentage values are stored as fractions; the UI must accept percentage points, for example `6.5` for 6.5%.
 
@@ -33,6 +35,8 @@ The workbook has `Financial Summary` and `Financial Analysis` tabs. Workbook per
 | Selling closing costs | I36 | 7 | percent of sale value |
 | Insurance growth | New input | 3 | percent/year |
 | HOA growth | New input | 3 | percent/year |
+
+Workbook I6 stores a 5% management assumption. The brief's example/check figures explicitly require 10%, so the numeric defaults use 10%, applied to collected rent. This discrepancy is an intentional override, not a percentage-conversion error.
 
 All seven monthly utilities default to zero: Electricity (I11), Fuel Oil (I12), Gas (I13), Sewer (I14), Telephone (I15), Water (I16), Other (I17).
 
@@ -81,9 +85,17 @@ Financial Analysis rows to preserve or map explicitly:
 - 48 property value; 49 loan balance; 50 equity; 51 sale-related row; 52 accumulated cash flow.
 - 56 cap rate; 57 cash-on-cash return; 60 annual-sale IRR.
 
-The workbook also has equity at purchase (Summary C7), effective future value (Analysis 53), return on equity (58), annualized return (59), and ROI (61). The brief says to match the sheet's rows but does not fully specify these supplementary return definitions. Before Phase 4, explicitly settle whether to include these and document their corrected definitions; never silently copy the workbook's flawed sale/cap-rate assumptions. Net sale proceeds must remain separately identifiable from cash flow plus proceeds.
+The engine also supplies the workbook's supplementary rows, with corrected sale accounting:
 
-## Acceptance fixtures from the brief, not computed by this scaffold
+- Equity at purchase (Summary C7): after-renovation value minus the initial loan.
+- Effective future value (Analysis 53): cumulative cash flow plus net sale proceeds. This is ending wealth, not profit.
+- Return on equity (58): effective net cash flow divided by year-end equity, matching the workbook row's denominator convention. This supplementary ratio is not cash-on-cash return or IRR.
+- Annualized return (59): `(effectiveFutureValue / totalCashRequired) ** (1 / year) - 1`. It treats cumulative distributions as ending wealth, unlike time-weighted annual cash flows in IRR, and is unavailable for negative ending wealth or zero initial cash.
+- ROI (61): `(effectiveFutureValue - totalCashRequired) / totalCashRequired`.
+
+`netSaleProceeds` excludes the current year's operating cash flow; `cashFlowWithSale` includes it once. These supplementary definitions are explicit implementation choices where the brief does not fully define a workbook row. Present them distinctly when Phase 4 renders the table.
+
+## Acceptance fixtures from the brief, verified by the engine
 
 | Period | Metric | Expected display |
 |---|---|---:|
@@ -116,12 +128,13 @@ The workbook also has equity at purchase (Summary C7), effective future value (A
 | Year 30 | Cumulative cash flow | $452,099 |
 | Year 30 | IRR if sold | 14.04% |
 
-## Edge-case policy to settle and test in Phase 2
+## Implemented edge-case policy
 
-- Blank, invalid, non-finite, and negative entries must produce understandable validation, not silently misleading results.
-- Distinguish invalid negative costs from potentially meaningful negative growth/appreciation rates.
-- Define allowable percentage ranges and whether fractional-year loan terms are supported.
-- Zero interest must amortize correctly; zero principal must not produce invalid mortgage math.
-- Guard zero denominators for cap rate and cash-on-cash return.
-- IRR may not exist, and nonconventional cash flows may have multiple roots. Explain unavailable or ambiguous results rather than returning an arbitrary percentage.
-- Shorter loans must stop both payments and interest; depreciation must never exceed its basis.
+- Explicit blank, malformed, non-finite, and negative cost inputs return field-specific errors. Omitted fields use defaults; an explicit blank does not.
+- Down payment, vacancy, maintenance, management, building ratio, and closing-cost percentages must be between 0 and 100. Interest must be nonnegative. Growth and appreciation can decline as far as -100%, but not below it.
+- Positive loan terms must represent whole months; 1.5 years is supported. Longer-than-30-year loans retain their remaining balance at Year 30.
+- Zero interest uses straight-line principal repayment. Cash purchases have no mortgage. Payments and interest stop after payoff; depreciation never exceeds its basis.
+- Undefined ratios are `null`, with a reason in the year's `unavailable` object, not fabricated zeroes.
+- IRR is restricted to finite rates greater than -100%. Exact root classification distinguishes repeated roots from multiple distinct rates; missing, ambiguous, or unsupported-precision IRRs are explicitly unavailable.
+- Non-finite money projections or unrepresentable mortgage calculations return a model-level numeric-range error rather than partial results. Zero starting amounts stay zero even with extreme unused growth assumptions.
+- Full precision is retained until display. Exact root counting does not make all currency arithmetic exact: the model uses standard JavaScript floating-point numbers, not a cent-rounded lender schedule.

@@ -1,0 +1,234 @@
+{
+  "description": "Read-only Financial Summary numeric input snapshot. Formula caches are not acceptance values. Insurance/HOA growth are separate brief additions.",
+  "sourceSha256": "47c44b8acb623b30f4097eb06dba11f085f3b836e36a88d0da755c5a12b149c2",
+  "fields": [
+    {
+      "path": "purchasePrice",
+      "cell": "C4",
+      "rawWorkbookValue": 270000,
+      "expected": 270000
+    },
+    {
+      "path": "afterRepairValue",
+      "cell": "C3",
+      "rawWorkbookValue": 270000,
+      "expected": 270000
+    },
+    {
+      "path": "renovationCost",
+      "cell": "C5",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "downPaymentPercent",
+      "cell": "C11",
+      "rawWorkbookValue": 0.25,
+      "expected": 25.0
+    },
+    {
+      "path": "interestRatePercent",
+      "cell": "C10",
+      "rawWorkbookValue": 0.065,
+      "expected": 6.5
+    },
+    {
+      "path": "loanTermYears",
+      "cell": "C12",
+      "rawWorkbookValue": 30,
+      "expected": 30
+    },
+    {
+      "path": "monthlyRent",
+      "cell": "I3",
+      "rawWorkbookValue": 2400,
+      "expected": 2400
+    },
+    {
+      "path": "monthlyPropertyTaxes",
+      "cell": "I7",
+      "rawWorkbookValue": 183,
+      "expected": 183
+    },
+    {
+      "path": "monthlyInsurance",
+      "cell": "I8",
+      "rawWorkbookValue": 150,
+      "expected": 150
+    },
+    {
+      "path": "monthlyHoa",
+      "cell": "I9",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "vacancyPercent",
+      "cell": "I4",
+      "rawWorkbookValue": 0.05,
+      "expected": 5.0
+    },
+    {
+      "path": "maintenancePercent",
+      "cell": "I5",
+      "rawWorkbookValue": 0.05,
+      "expected": 5.0
+    },
+    {
+      "path": "managementPercent",
+      "cell": "I6",
+      "rawWorkbookValue": 0.1,
+      "expected": 10.0
+    },
+    {
+      "path": "rentGrowthPercent",
+      "cell": "I29",
+      "rawWorkbookValue": 0.03,
+      "expected": 3.0
+    },
+    {
+      "path": "propertyTaxGrowthPercent",
+      "cell": "I30",
+      "rawWorkbookValue": 0.03,
+      "expected": 3.0
+    },
+    {
+      "path": "utilitiesGrowthPercent",
+      "cell": "I31",
+      "rawWorkbookValue": 0.01,
+      "expected": 1.0
+    },
+    {
+      "path": "miscellaneousGrowthPercent",
+      "cell": "I32",
+      "rawWorkbookValue": 0.01,
+      "expected": 1.0
+    },
+    {
+      "path": "buildingPercent",
+      "cell": "I33",
+      "rawWorkbookValue": 0.5,
+      "expected": 50.0
+    },
+    {
+      "path": "appreciationPercent",
+      "cell": "I34",
+      "rawWorkbookValue": 0.03,
+      "expected": 3.0
+    },
+    {
+      "path": "buyingClosingPercent",
+      "cell": "I35",
+      "rawWorkbookValue": 0.01,
+      "expected": 1.0
+    },
+    {
+      "path": "sellingClosingPercent",
+      "cell": "I36",
+      "rawWorkbookValue": 0.07,
+      "expected": 7.000000000000001
+    },
+    {
+      "path": "monthlyUtilities.electricity",
+      "cell": "I11",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "monthlyUtilities.fuelOil",
+      "cell": "I12",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "monthlyUtilities.gas",
+      "cell": "I13",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "monthlyUtilities.sewer",
+      "cell": "I14",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "monthlyUtilities.telephone",
+      "cell": "I15",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "monthlyUtilities.water",
+      "cell": "I16",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "monthlyUtilities.other",
+      "cell": "I17",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "annualMiscellaneous.accounting",
+      "cell": "I19",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "annualMiscellaneous.advertising",
+      "cell": "I20",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "annualMiscellaneous.janitorial",
+      "cell": "I21",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "annualMiscellaneous.lawnSnow",
+      "cell": "I22",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "annualMiscellaneous.legal",
+      "cell": "I23",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "annualMiscellaneous.licenses",
+      "cell": "I24",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "annualMiscellaneous.miscellaneous",
+      "cell": "I25",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "annualMiscellaneous.residentSuperintendent",
+      "cell": "I26",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "annualMiscellaneous.supplies",
+      "cell": "I27",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    },
+    {
+      "path": "annualMiscellaneous.trashRemoval",
+      "cell": "I28",
+      "rawWorkbookValue": 0,
+      "expected": 0
+    }
+  ]
+}

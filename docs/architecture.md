@@ -25,8 +25,10 @@ src/
         calculator-intro/ Calculator section wrapper, composes preview feature
         contact/         Contact markup, styles, local validation
     calculator/
-      constants/example-deal.js
-      components/        Presentation-only preview; no engine yet
+      engine.js          Public pure calculation entry, no DOM or side effects
+      constants/         Numeric financial defaults and preview-only formatted copy
+      utils/             Validation, mortgage, projection, and IRR/root mathematics
+      components/        Presentation-only preview, not yet connected to the engine
   pages/homepage.js
   styles/
     tokens.css           Exact assessment brand tokens and shared spacing
@@ -50,7 +52,9 @@ Navigation uses app-local fragment anchors, preserving direct links, reloads, an
 
 ## Scope and future seams
 
-The calculator feature currently owns static example inputs and an explicitly noninteractive preview. The next phase can introduce `calculator/utils/` for pure financial functions and tests, then components for real inputs, results, tables, and charts. Do not turn formatted preview strings into the math engine's numeric source of truth: use the cell mapping in `docs/calculation-notes.md` for numeric defaults and rate conversion.
+The calculator feature exposes `calculateInvestment()` from `engine.js`. Financial defaults live in `constants/default-inputs.js`; pure calculation and validation functions live in `utils/`. Financial tests live in `tests/calculator/` and run without loading the page. The engine has no DOM, network, storage, or formatting dependencies. See [the API](calculator-engine.md).
+
+The page still composes the explicitly noninteractive preview. The next phase will add real controls and headline rendering, followed by the projection table and chart. Keep those responsibilities in calculator feature components. Formatted strings in `constants/example-deal.js` are presentation-only, not a numeric source of truth; use the engine's defaults and validated model instead.
 
 The contact form is local-only. It validates but never sends or persists details. Adding a real submission service is a separately scoped change requiring truthful status copy and explicit authorization.
 
