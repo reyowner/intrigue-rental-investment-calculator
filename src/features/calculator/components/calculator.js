@@ -37,6 +37,7 @@ export function calculator() {
   return `<div class="calculator-workspace" data-calculator>
     <form class="calculator-form" data-calculator-form novalidate aria-labelledby="deal-inputs-heading">
       <div class="calculator-form-heading"><div><h3 id="deal-inputs-heading" tabindex="-1">Your property numbers</h3><p>Start with Intrigue's example duplex or enter your own deal. Enter amounts in US dollars without commas. Results are formatted automatically.</p></div><div class="calculator-form-actions"><button type="reset" class="calculator-reset">Reset to example</button></div></div>
+      <p class="deal-link-notice" data-deal-link-notice role="status" hidden></p>
       <div class="calculator-errors" data-calculator-errors tabindex="-1" hidden><p>Check these inputs to see your estimates.</p><ul data-calculator-error-list></ul></div>
       ${INPUT_GROUPS.filter(group => !group.advanced).map(inputGroup).join('')}
       <section class="calculator-derived" aria-labelledby="financing-totals-heading"><h4 id="financing-totals-heading">Purchase and financing totals</h4><p>Calculated from your inputs, not additional amounts to enter.</p><dl>${view.derived.map(metric => resultMetric(metric, 'derived')).join('')}</dl></section>

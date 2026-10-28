@@ -65,4 +65,10 @@ The calculator passes the same successful or invalid result to `projection-contr
 
 The contact form is local-only. It validates but never sends or persists details. Adding a real submission service is a separately scoped change requiring truthful status copy and explicit authorization.
 
-The owner has configured Vercel hosting for `main` (production) and `develop` (preview), with other branch builds skipped. See [deployment workflow](deployment.md). This feature does not change hosting settings or add analytics, trackers, cookies, theme switching, or optional calculator bonuses.
+The owner has configured Vercel hosting for `main` (production) and `develop` (preview), with other branch builds skipped. See [deployment workflow](deployment.md). Enhancements do not change hosting settings or add analytics, trackers or cookies.
+
+## Optional output and presentation enhancements
+
+`features/theme/` owns theme choice, persistence and semantic overrides. Header initialization binds the mode control; a blocking document bootstrap avoids a wrong-theme flash. Chart presentation listens for theme changes without modifying the financial model.
+
+The calculator controller exposes current `{inputs, model}` snapshots/subscriptions. `calculator-tools-controller.js` handles share-link restoration/copy and the user-initiated report action. `utils/share-link.js` owns the bounded fragment codec; `report/` owns native PDF text/tables/vector graphs and the Blob download; its existing HTML preview/print styles remain diagnostic-only. `services/pdf-library.js` loads the pinned local PDF libraries and fonts only on demand. Contact receives the same snapshot API through homepage composition and remains local-only. See [behavior, privacy and verification](enhancements.md).

@@ -8,6 +8,8 @@
 @import '../features/calculator/components/projection-results.css';
 @import '../features/calculator/components/projection-charts.css';
 @import '../features/homepage/sections/contact/contact.css';
+@import '../features/calculator/components/calculator-tools.css';
+@import '../features/theme/theme.css';
 *, *::before, *::after {
   box-sizing: border-box;
 }

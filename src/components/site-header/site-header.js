@@ -1,3 +1,4 @@
+import { initializeTheme } from '../../features/theme/theme.js';
 import { icon } from '../ui/icon.js';
 import { navigationLinks, contactLink } from './navigation.js';
 
@@ -16,6 +17,7 @@ export function siteHeader() {
         ${navigationLinks.map(link => `<a href="${link.href}">${link.label}</a>`).join('')}
       </div>
       <div class="header-actions">
+        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Switch color mode"></button>
         <a class="button button--small button--lime header-contact" href="${contactLink.href}">${contactLink.label} ${icon('arrow')}</a>
         <button class="menu-toggle" type="button" aria-controls="mobile-navigation" aria-expanded="false" aria-label="Open navigation">${icon('menu')}</button>
       </div>
@@ -38,6 +40,7 @@ export function siteHeader() {
 }
 
 export function initializeHeader() {
+  initializeTheme();
   const button = document.querySelector('.menu-toggle');
   const closeButton = document.querySelector('.menu-close');
   const dialog = document.querySelector('#mobile-navigation');

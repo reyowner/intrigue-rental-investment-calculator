@@ -1,4 +1,24 @@
 import { icon } from '../../../../components/ui/icon.js';
+import { INPUT_GROUPS } from '../../../calculator/constants/input-fields.js';
+import { buildResultView } from '../../../calculator/utils/result-view.js';
+
+const summaryDefinitions = [...buildResultView({ok: false}).headline, ...buildResultView({ok: false}).derived];
+const unitLabel = {currency: 'USD', percent: '%', years: 'years', monthly: 'USD / month', annual: 'USD / year'};
+
+function dealReview() {
+  return `<div class="contact-deal-opt-in">
+    <label class="contact-deal-label" for="contact-include-deal"><input id="contact-include-deal" name="includeDeal" type="checkbox" aria-describedby="contact-deal-privacy contact-deal-error" aria-controls="contact-deal-review"> Include my current deal numbers</label>
+    <p class="field-help" id="contact-deal-privacy">Optional, browser-only review. Nothing is sent or stored. The review follows your current calculator numbers, not a saved copy.</p>
+    <p class="field-error" id="contact-deal-error" role="status" hidden></p>
+    <details class="contact-deal-review" id="contact-deal-review" hidden>
+      <summary>Review current deal numbers (read-only)</summary>
+      <p class="field-help">Estimates, not guarantees. Review all assumptions before discussing a property.</p>
+      <h4>Headline and financing summary</h4>
+      <dl class="contact-deal-values">${summaryDefinitions.map((field,index)=>`<div><dt>${field.label}</dt><dd data-contact-summary="${index}"></dd></div>`).join('')}</dl>
+      ${INPUT_GROUPS.map(group=>`<h4>${group.title}</h4><dl class="contact-deal-values">${group.fields.map(field=>`<div><dt>${field.label} <span>(${unitLabel[field.unit]})</span></dt><dd data-contact-assumption="${field.name}"></dd></div>`).join('')}</dl>`).join('')}
+    </details>
+  </div>`;
+}
 
 export function contact() {
   return `<section class="contact-section" id="contact" aria-labelledby="contact-heading">
@@ -12,6 +32,7 @@ export function contact() {
           <div class="form-field"><label for="contact-property">Property address <span>(optional)</span></label><input id="contact-property" name="property" type="text" autocomplete="street-address" maxlength="250" aria-describedby="contact-property-error"><p class="field-error" id="contact-property-error" hidden></p></div>
           <div class="form-field form-field--full"><label for="contact-message">Message <span>(required)</span></label><textarea id="contact-message" name="message" rows="4" required minlength="10" maxlength="2000" aria-describedby="contact-message-help contact-message-error"></textarea><p class="field-help" id="contact-message-help">Tell us what you are considering or where you would like a second perspective.</p><p class="field-error" id="contact-message-error" hidden></p></div>
         </div>
+        ${dealReview()}
         <div class="form-action"><button class="button button--dark" type="submit">Check my message ${icon('arrow')}</button><span>Browser-only validation.<br>No message is sent or stored.</span></div>
         <p class="form-feedback" id="contact-feedback" role="status" tabindex="-1" hidden></p>
       </form>
@@ -20,11 +41,39 @@ export function contact() {
 }
 
 /** Local-only form: no API calls, persistence, analytics, or remote submission. */
-export function initializeContact() {
+export function initializeContact({getSnapshot, subscribe} = {}) {
   const form = document.querySelector('#deal-contact-form');
   const feedback = document.querySelector('#contact-feedback');
-  const fields = [...form.querySelectorAll('input, textarea')];
+  const fields = [...form.querySelectorAll('.contact-fields input, .contact-fields textarea')];
+  const includeDeal = document.querySelector('#contact-include-deal');
+  const review = document.querySelector('#contact-deal-review');
+  const assumptions = [...form.querySelectorAll('[data-contact-assumption]')];
+  const summaries = [...form.querySelectorAll('[data-contact-summary]')];
   let attempted = false;
+
+  const dealError = document.querySelector('#contact-deal-error');
+  function refreshDeal() {
+    const snapshot = includeDeal.checked ? getSnapshot?.() : null;
+    const valid = !includeDeal.checked || snapshot?.model?.ok === true;
+    review.hidden = !includeDeal.checked || !valid;
+    dealError.hidden = valid;
+    dealError.textContent = valid ? '' : 'Correct the calculator inputs or uncheck Include my current deal numbers to continue without them.';
+    includeDeal.setAttribute('aria-invalid', String(!valid));
+    for (const node of [...assumptions, ...summaries]) node.textContent = '';
+    if (!includeDeal.checked || !valid) return valid;
+    for (const node of assumptions) {
+      node.textContent = node.dataset.contactAssumption.split('.').reduce((value,key)=>value[key],snapshot.inputs);
+    }
+    const view = buildResultView(snapshot.model);
+    const summary = [...view.headline, ...view.derived];
+    for (const node of summaries) {
+      const metric = summary[Number(node.dataset.contactSummary)];
+      node.textContent = metric.value + (metric.unavailable ? `. ${metric.unavailable}` : '');
+    }
+    return true;
+  }
+  includeDeal.addEventListener('change', () => { feedback.hidden = true; refreshDeal(); });
+  if (subscribe) subscribe(() => { if (includeDeal.checked) { feedback.hidden = true; refreshDeal(); } });
 
   function errorFor(field) {
     const value = field.value.trim();
@@ -59,7 +108,8 @@ export function initializeContact() {
       fields[firstInvalid].focus();
       return;
     }
-    feedback.textContent = 'Your message is ready. This is a demo form, so nothing has been sent to Intrigue. Use the main website contact link if you would like to get in touch.';
+    if (!refreshDeal()) { includeDeal.focus(); return; }
+    feedback.textContent = `Your message${includeDeal.checked ? ' and current deal numbers are' : ' is'} ready for local review. This is a demo form, so nothing has been sent to Intrigue. Use the main website contact link if you would like to get in touch.`;
     feedback.hidden = false;
     feedback.focus();
   });

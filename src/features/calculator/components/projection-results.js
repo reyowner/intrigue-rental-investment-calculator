@@ -1,6 +1,7 @@
 import { buildProjectionView } from '../utils/projection-view.js';
 import { buildResultView } from '../utils/result-view.js';
 import { projectionCharts } from './projection-charts.js';
+import { calculatorTools } from './calculator-tools.js';
 
 const rowId = key => key.replaceAll('.', '-');
 
@@ -30,6 +31,7 @@ export function projectionResults(model) {
     <p class="projection-invalid" data-projection-invalid${view.valid ? ' hidden' : ''}>The 30-year projection is unavailable. Correct the highlighted inputs above to see the table and charts.</p>
     <div data-projection-valid${view.valid ? '' : ' hidden'}>
       <dl class="projection-overview" aria-label="Deal summary">${summary.map(metric => `<div class="projection-overview-metric" data-overview="${metric.key}"><dt>${metric.label}</dt><dd><span data-result-value>${metric.value}</span><p class="calculator-unavailable" data-result-reason${metric.unavailable ? '' : ' hidden'}>${metric.unavailable}</p></dd></div>`).join('')}</dl>
+      ${calculatorTools()}
       ${projectionCharts()}
       <div class="projection-table-heading"><div><h4 id="projection-table-heading" tabindex="-1">Full 30-year projection</h4><p id="projection-table-instructions">Annual amounts in US dollars, except monthly cash flow and percentage returns. Scroll inside the table to compare years and rows. Row labels and year headings stay in view. Use the year selector to jump across the table, or focus the table and use the arrow keys.</p></div><div class="projection-table-controls"><label for="projection-year-jump">Jump to year</label><select id="projection-year-jump" data-projection-year>${view.years.map(year => `<option value="${year}">Year ${year}</option>`).join('')}</select></div></div>
       <details class="projection-group-navigation"><summary>Jump to a table section</summary><nav aria-label="Projection table sections"><ul>${view.groups.map(group => `<li><a href="#projection-group-${group.id}">${group.label}</a></li>`).join('')}</ul></nav></details>

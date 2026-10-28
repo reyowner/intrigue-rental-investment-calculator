@@ -33,7 +33,7 @@ export function initializeProjectionChart(scope, { loadLibrary = loadChartLibrar
     if (!isProjectionChartModel(model)) { clear(); return; }
     const retryHadFocus = retry.ownerDocument?.activeElement === retry;
     const selectedYear = Number(year.value);
-    const config = buildProjectionChartConfig(model, metric, selectedYear);
+    const config = buildProjectionChartConfig(model, metric, selectedYear, canvas.ownerDocument?.documentElement?.dataset.theme);
     find('selection-label').textContent = `${CHART_METRICS[metric]} · Year ${selectedYear}`;
     find('value').textContent = chartDollars(model.years[selectedYear - 1][metric]);
     canvas.setAttribute('aria-label', `${CHART_METRICS[metric]}, years 1–30`);
@@ -98,6 +98,12 @@ export function initializeProjectionChart(scope, { loadLibrary = loadChartLibrar
   buttons.forEach(button => button.addEventListener('click', () => { metric = button.dataset.chartMetric; if (revealed) void reveal(); }));
   year.addEventListener('change', () => { if (revealed) void reveal(); });
   retry.addEventListener('click', () => void reveal());
+  const themeWindow = root.ownerDocument?.defaultView;
+  themeWindow?.addEventListener('intrigue:theme-change', () => {
+    if (chart && revealed && isProjectionChartModel(model)) {
+      try { render(); } catch { showError(); }
+    }
+  });
   mounted.set(root, api);
   return api;
 }

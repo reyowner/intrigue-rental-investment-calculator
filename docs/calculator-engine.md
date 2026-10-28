@@ -127,7 +127,7 @@ Run from the repository root, using Node.js 24.22.1 as tested:
 node --test tests/calculator/*.test.mjs tests/startup.test.mjs tests/check-static.mjs
 ```
 
-The engine phase recorded **102 tests passed, zero failed**. The current combined suite includes UI and projection presenters and has **138 passing tests**. Engine-phase coverage includes:
+The engine phase recorded **102 tests passed, zero failed**. The current combined suite includes UI and projection presenters and has **165 passing tests**. Engine-phase coverage includes:
 
 - Every supplied assessment check figure, including Year 1, Year 5, Year 10, and Year 30 figures and all five headlines.
 - Numeric defaults mapped to workbook cells, including the intentional 10% management override and the two added growth inputs.
