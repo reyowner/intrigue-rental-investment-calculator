@@ -4,7 +4,7 @@
 @import '../features/homepage/sections/hero/hero.css';
 @import '../features/homepage/sections/how-it-works/how-it-works.css';
 @import '../features/homepage/sections/calculator-intro/calculator-intro.css';
-@import '../features/calculator/components/calculator-preview.css';
+@import '../features/calculator/components/calculator.css';
 @import '../features/homepage/sections/contact/contact.css';
 *, *::before, *::after {
   box-sizing: border-box;

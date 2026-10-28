@@ -1,6 +1,6 @@
 # Development roadmap
 
-Phase 0 is committed on `main`. Phase 1 landing page and navigation are committed on `develop`. Phase 2 is implemented on `feat/calculation-engine`, with the calculation engine tested independently of the page. The visible calculator remains a clearly labeled noninteractive preview. Phases 3 onward are not implemented. Publishing the Phase 2 feature branch is separately authorized. Merging into `develop` or `main` and deployment are not included.
+The foundation is committed on `main`. The landing page, navigation, and calculation engine are merged into `develop`. Phase 3 is implemented on `feat/interactive-calculator`, branched from that merged development baseline. It includes all inputs and live headline results. Phase 4 remains required: the complete 30-year projection table and at least one chart. Later phases are not implemented. Merging this feature branch and deployment are handled separately.
 
 ## Phase 0: repository foundation
 
@@ -34,13 +34,13 @@ Phase 0 is committed on `main`. Phase 1 landing page and navigation are committe
 - All workbook defaults, seven utilities, ten miscellaneous lines, and new 3% insurance/HOA growth fields.
 - Visible labels, short explanations, owner-paid utility guidance, and read-only derived values.
 - Live updates, graceful field validation, five required headline results.
-- Gate: exercise every input group and error state without stale or misleading results.
+- Gate: exercise every input group and error state without stale or misleading results. See [interactive calculator verification](interactive-calculator.md).
 
-## Phase 4: long-term results
+## Phase 4: required long-term results, next phase
 
 - Complete 30-year projection including individual expense lines and source-mapped supplementary rows.
 - Phone-usable horizontal table with clear row/year orientation and keyboard access.
-- At least one chart, plus equivalent accessible tabular data.
+- At least one real engine-backed chart, plus equivalent accessible tabular data. The table and chart are mandatory assessment requirements, not optional bonuses.
 - Gate: table/chart/headline agreement, readable mobile scrolling, no whole-page horizontal overflow.
 
 ## Phase 5: contact flow and quality assurance

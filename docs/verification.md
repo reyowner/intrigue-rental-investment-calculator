@@ -2,7 +2,7 @@
 
 ## Scope
 
-The Phase 1 landing-page checks below are retained as a historical record. Phase 2 adds an independently callable financial engine, without changing or connecting the visible preview. Current engine tests, browser module checks, and financial coverage limits are recorded in [calculator-engine.md](calculator-engine.md). Real calculator controls/results, rendered projection table/chart, hosting, and real contact delivery are still not included.
+The Phase 1 landing-page checks below are retained as a historical record. Phase 2 added an independently callable financial engine, recorded in [calculator-engine.md](calculator-engine.md). Phase 3 now replaces the preview with live controls and headline results; see [interactive-calculator.md](interactive-calculator.md) for its current verification. The rendered projection table/chart, hosting, and real contact delivery are still not included.
 
 ## Automated source checks
 

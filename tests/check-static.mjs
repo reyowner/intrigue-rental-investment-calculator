@@ -68,11 +68,15 @@ test('page templates avoid prohibited naming and em dashes', () => {
   for (const name of ['Intrigue PM', 'Intrigue Property Management', 'Rent Analysis']) assert.ok(!content.includes(name));
 });
 
-test('preview and form expose honest unimplemented states', () => {
-  const preview = readFileSync(resolve(root, 'src/features/calculator/components/calculator-preview.js'), 'utf8');
+test('calculator renders actual engine-backed inputs/results while contact remains local-only', async () => {
+  const { calculator } = await import('../src/features/calculator/components/calculator.js');
+  const markup = calculator();
   const contact = readFileSync(resolve(root, 'src/features/homepage/sections/contact/contact.js'), 'utf8');
-  assert.match(preview, /No results are calculated in this preview/);
-  assert.doesNotMatch(preview, /<input|<button/);
+  assert.equal((markup.match(/<input /g) || []).length, 40);
+  assert.match(markup, /7\.11%/);
+  assert.match(markup, /5\.45%/);
+  assert.match(markup, /30-year projection table and chart/);
+  assert.doesNotMatch(markup, /preview is not interactive|No results are calculated/);
   assert.match(contact, /nothing has been sent to Intrigue/);
   assert.doesNotMatch(contact, /fetch\(|XMLHttpRequest|localStorage|sessionStorage|console\.log/);
 });

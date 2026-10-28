@@ -25,17 +25,6 @@
   margin: 1rem 0 0;
 }
 
-.preview-badge {
-  display: inline-flex;
-  padding: .3rem .65rem;
-  border: 1px solid #b4cdd5;
-  border-radius: 4px;
-  background: #e5f0f4;
-  color: var(--color-teal);
-  font-size: .7rem;
-  font-weight: 600;
-}
-
 .estimate-note {
   color: var(--color-muted);
   font-size: .7rem;

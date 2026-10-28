@@ -4,7 +4,7 @@ An assessment project for Intrigue Real Estate & Property Management, intended t
 
 ## Status
 
-**Phase 2: calculation engine.** The branded landing page and navigation are in place. A pure, browser-side calculation engine now produces the full 30-year model and matches every assessment check figure. The page still shows the explicitly noninteractive preview: live controls/results, projection-table rendering, and the chart belong to the next phases. No backend or deployment has been added.
+**Phase 3: interactive calculator.** The landing page now includes 40 editable inputs, all advanced assumptions, read-only financing totals, and five live headline results connected to the tested calculation engine. Each input has a visible label and helper text. Invalid inputs clear stale estimates; undefined returns show N/A with an explanation. The mandatory full 30-year projection table and chart are next in Phase 4, not implemented yet. No backend or deployment has been added.
 
 ## Stack
 
@@ -20,16 +20,19 @@ python -m http.server 8000 --bind 127.0.0.1
 
 Then visit `http://127.0.0.1:8000`. Python is only a convenience for local serving, not a runtime or build dependency. Any static HTTP server works. Native JavaScript modules require HTTP; opening `index.html` directly with `file://` will show the fallback instead of the application. Deploy the repository root, not just `src/`, when hosting is authorized.
 
+Slower reloads show a branded, animated loading screen while native modules download. A 180ms reveal grace period avoids flashing it on fast cached refreshes, without delaying the ready page. Reduced-motion mode remains static. Actual startup failures show a retry action instead of misleading HTTP instructions. See [startup and reload verification](docs/startup-and-reloads.md).
+
 ## Structure
 
 ```text
 index.html                     Document shell and no-JavaScript fallback
-src/main.js                    Native-module application entry
+src/bootstrap.js               Loading/error boundary for the module graph
+src/main.js                    Native-module application composition entry
 src/pages/homepage.js           Page composition and section-link focus
 src/components/                Shared header, footer, and line icons
 src/styles/                    Global styles and brand tokens
 src/features/homepage/          Landing-page sections and copy constants
-src/features/calculator/        Pure calculation engine, defaults, and static preview
+src/features/calculator/        Pure engine, input definitions, controller, and live results
 assets/images/                 Local brand assets and property photo
 tests/check-static.mjs          Dependency-free source checks
 tests/calculator/              Financial regression tests and independent fixtures
@@ -38,6 +41,7 @@ docs/verification.md           Checks performed and coverage limits
 docs/roadmap.md                Development phases
 docs/calculation-notes.md       Source mapping, overrides, check figures
 docs/calculator-engine.md       Engine API, error policy, and verification
+docs/interactive-calculator.md  UI behavior, input coverage, and browser verification
 ```
 
 ## Source precedence
@@ -82,7 +86,7 @@ Confidence comes from inspectable rules and repeatable checks, not from an asser
 - **All supplied check figures pass.** The committed suite verifies the assessment's initial, Year 1, Year 5, Year 10, and Year 30 figures, not just the headline values above.
 - **Independent comparisons.** Tests compare nonzero expense lines against a separately calculated 50-digit Python Decimal fixture and conventional IRRs against an independent bisection oracle. Accounting identities reconcile cash flow, equity, and mortgage balances.
 - **Difficult cases are tested.** Coverage includes blank/negative inputs, zero interest, cash purchases, short loans, declining assumptions, depreciation limits, zero denominators, and repeated or multiple IRR roots. Undefined returns remain explicitly unavailable instead of being presented as 0%.
-- **Verification goes beyond Node.** The recorded run passed 102 automated tests and 26 native-module checks in the available Chromium-based browser. A separate fresh-context AI-assisted review also challenged known-factor and extreme-scaling IRR cases; it reported no reproducible defects within its coverage.
+- **Verification goes beyond Node.** The current suite passes 113 automated tests. The interactive calculator passes 161 functional browser checks, with additional responsive, keyboard, contrast, and privacy checks. The engine phase also recorded 26 native-module checks in the available Chromium-based browser. A separate fresh-context AI-assisted review also challenged known-factor and extreme-scaling IRR cases; it reported no reproducible defects within its coverage.
 
 The committed Node suite is the repeatable baseline. Browser checks and AI-assisted review are supplementary evidence, not an independent professional audit or a mathematical proof. The projections depend on the visitor's assumptions; they do not guarantee rents, appreciation, financing terms, or investment outcomes. Currency calculations use JavaScript floating-point arithmetic, not a lender's cent-rounded servicing ledger. Cross-browser and physical-device coverage remains limited as documented below.
 
@@ -93,15 +97,15 @@ See [the roadmap](docs/roadmap.md). Calculation logic is separate from DOM rende
 Run the complete dependency-free test suite:
 
 ```sh
-node --test tests/calculator/*.test.mjs tests/check-static.mjs
+node --test tests/calculator/*.test.mjs tests/startup.test.mjs tests/check-static.mjs
 ```
 
 Tests were executed with Node.js 24.22.1. Node is a test-only tool, not a browser runtime or build dependency. See [verification notes](docs/verification.md) for browser checks and coverage limits. Safari, Firefox, Edge-specific, and physical-device verification remain pending.
 
 The contact form validates name, email, optional phone, and message in the browser. It does not send, persist, or log contact details. A successful check explicitly says that nothing was sent. The separate main-website link is the real contact route.
 
-The visible calculator preview remains presentation-only, with no editable controls, rendered financial results, or fake chart. The independently tested engine is intentionally not wired to it yet. Read-only example values come from the supplied duplex.
+The live calculator uses the engine as its sole source of financial calculations. All seven utilities and ten miscellaneous lines are included in Advanced assumptions, along with reserves, growth rates, building ratio, appreciation, and buying/selling costs. Some assumptions affect later projection rows rather than the five current headlines. See [the UI verification record](docs/interactive-calculator.md) and [browser runner instructions](tests/browser/README.md). The 30-year table and chart remain required Phase 4 work.
 
 ## AI-use disclosure
 
-The foundation, landing page, and calculation engine were prepared with OpenAI's GPT-6.1 model through Hermes Agent by Nous Research. AI assistance was used for requirements and workbook review, brand research, implementation, regression tests, independent calculation fixtures, adversarial code review, documentation, and browser checks. AI assistance does not replace developer review. The submitting developer remains responsible for understanding, validating, and explaining every submitted line and the calculation logic.
+The foundation, landing page, calculation engine, and interactive calculator were prepared with OpenAI's GPT-6.1 model through Hermes Agent by Nous Research. AI assistance was used for requirements and workbook review, brand research, implementation, regression tests, independent calculation fixtures, adversarial code review, documentation, and browser checks. AI assistance does not replace developer review. The submitting developer remains responsible for understanding, validating, and explaining every submitted line and the calculation logic.

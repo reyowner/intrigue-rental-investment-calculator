@@ -11,11 +11,51 @@
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/images/intrigue-favicon.png" type="image/png">
   <link rel="stylesheet" href="src/styles/global.css">
-  <script src="src/main.js" type="module"></script>
+  <link rel="modulepreload" href="src/main.js">
+  <style>
+    body { margin: 0; background: #123a48; }
+    body:has(#app[data-startup-state="ready"]) { background: #fff; }
+    .startup-screen { --startup-reveal-delay: 180ms; box-sizing: border-box; min-height: 100vh; min-height: 100svh; padding: clamp(1.5rem, 5vw, 6rem); display: flex; justify-content: center; align-items: center; color: #fff; background: #123a48; font: 1rem/1.65 'Raleway', Arial, sans-serif; text-align: center; }
+    .startup-content { display: flex; width: 100%; max-width: 36rem; flex-direction: column; align-items: center; animation: startup-reveal 160ms ease-out var(--startup-reveal-delay) both; }
+    .startup-indicator { position: relative; display: grid; place-items: center; width: 112px; height: 112px; margin-bottom: 2rem; }
+    .startup-orbit { position: absolute; inset: 0; border: 1px solid #cce5ed40; border-top: 2px solid #9dc31b; border-bottom-color: transparent; border-radius: 50%; animation: startup-orbit 1.5s linear infinite; }
+    .startup-mark { display: block; width: 58px; height: 48px; }
+    .startup-screen h1 { max-width: 26ch; margin: 0 0 1rem; font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 500; line-height: 1.25; letter-spacing: -.025em; }
+    .startup-screen p { max-width: 48ch; margin: 0 0 1.25rem; }
+    .startup-screen .startup-brand { color: #cce5ed; font-size: .8rem; font-weight: 500; }
+    .startup-screen [data-startup-loading], .startup-screen [data-startup-failure] { color: #cce5ed; font-size: .9rem; }
+    .startup-screen a { display: inline-flex; align-items: center; min-height: 44px; color: #cce5ed; font-size: .875rem; text-underline-offset: .25em; }
+    .startup-screen [data-startup-failure], .startup-screen [data-startup-retry] { display: none; }
+    #app[data-startup-state="error"] .startup-content { animation: none !important; opacity: 1; visibility: visible; }
+    #app[data-startup-state="error"] .startup-orbit { animation: none !important; }
+    #app[data-startup-state="error"] [data-startup-loading] { display: none; }
+    #app[data-startup-state="error"] [data-startup-failure] { display: block; }
+    #app[data-startup-state="error"] [data-startup-retry] { display: inline-flex; min-height: 44px; margin-bottom: .75rem; padding: .65rem 1.25rem; border-radius: 8px; color: #123a48; background: #9dc31b; text-decoration: none; font-weight: 600; }
+    @keyframes startup-orbit { to { transform: rotate(360deg); } }
+    @keyframes startup-reveal { from { opacity: 0; visibility: hidden; } to { opacity: 1; visibility: visible; } }
+    @keyframes startup-reveal-static { from { visibility: hidden; } to { visibility: visible; } }
+    @media (prefers-reduced-motion: reduce) {
+      .startup-content { animation: startup-reveal-static 0s linear var(--startup-reveal-delay) both !important; }
+      .startup-orbit { animation: none !important; }
+    }
+  </style>
 </head>
 <body id="top">
   <a class="skip-link" href="#main">Skip to content</a>
-  <div id="app"><main class="load-fallback" id="loading-main"><h1>Rental Property Investment Calculator</h1><p>For Indianapolis-area rental property investors.</p><p>The landing page is loading. If it does not appear, serve this folder over HTTP as described in the README. JavaScript modules cannot run when this file is opened directly.</p><a href="https://www.intriguepm.com/contact/">Contact Intrigue on the main website</a></main></div>
-  <noscript><p class="load-fallback">JavaScript is needed to display this preview. The calculator is not implemented yet. No message is submitted from this page.</p></noscript>
+  <div id="app" data-startup-state="loading" aria-busy="true">
+    <main class="load-fallback startup-screen" id="main" tabindex="-1" data-startup-screen>
+      <div class="startup-content">
+        <div class="startup-indicator" aria-hidden="true"><span class="startup-orbit"></span><svg class="startup-mark" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="501.40728760 70.91858673 51.40838623 42.74433899"><path class="st0" d="M538.34,103.94c3.22-4.08,9.4-13.08,13.16-26.21,0,0,1.58-3.89-2.33-4.52,0,0-3.61-.65-8.72-1.05-10.19-.72-17.3.31-21.37,1.26-.81.22-1.61.46-2.37.74-7.43,2.09-13.23,8.48-14.17,16.62-1.25,10.76,6.47,20.5,17.23,21.75,7.56.88,14.6-2.68,18.56-8.59ZM521,102.03c-4.96-.58-8.52-5.07-7.94-10.03.58-4.96,5.07-8.52,10.03-7.94,4.96.58,8.52,5.07,7.94,10.03-.58,4.96-5.07,8.52-10.03,7.94Z" fill="#9DC31B" /></svg></div>
+        <p class="startup-brand">Intrigue Real Estate &amp; Property Management</p>
+        <h1>Rental Property Investment Calculator</h1>
+        <p role="status" data-startup-loading>Loading the calculator. Preparing the example duplex and your input fields.</p>
+        <p role="alert" data-startup-failure>The calculator could not load. Check your connection and try again. Your property numbers have not been sent.</p>
+        <a href="./" data-startup-retry>Try again</a>
+        <noscript><style>[data-startup-loading] { display: none; } .startup-content, .startup-orbit { animation: none !important; }</style><p>Enable JavaScript to use the calculator. You can still contact Intrigue using the link below.</p></noscript>
+        <a href="https://www.intriguepm.com/contact/">Contact Intrigue on the main website</a>
+      </div>
+    </main>
+  </div>
+  <script id="app-entry" src="src/bootstrap.js" type="module" onerror="document.getElementById('app').setAttribute('data-startup-state', 'error'); document.getElementById('app').setAttribute('aria-busy', 'false');"></script>
 </body>
 </html>
