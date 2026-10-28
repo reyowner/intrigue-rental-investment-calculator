@@ -2,7 +2,7 @@
 
 ## Scope and authority
 
-The Phase 2 engine is independent of the landing page. It computes a 30-year projection in the browser, with no DOM, network, storage, charting, backend, package installation, or build dependency. The visible calculator preview remains unchanged and noninteractive until Phase 3.
+The Phase 2 engine is independent of the landing page. It computes a 30-year projection in the browser, with no DOM, network, storage, charting, backend, package installation, or build dependency. Phase 3 connects this engine to the live calculator through separate form and presentation adapters; see [the interactive calculator guide](interactive-calculator.md).
 
 The assessment brief overrides the workbook. [Calculation notes](calculation-notes.md) contain source-cell mappings, corrections, exact check figures, and supplementary-row definitions. The workbook was reviewed read-only and its SHA-256 remained unchanged.
 
@@ -119,15 +119,15 @@ IRR evaluates the annual cash-flow stream defined in the brief. One cash-flow si
 
 This distinguishes one repeated root from several distinct IRRs. It does not choose a root based on a starting guess. The solver accepts at most 30 annual periods and finite rates greater than -100%. Exact arithmetic has a coefficient-size budget; unsupported cases return an explicit precision limitation rather than a guessed rate. All ordinary property-money projections still use JavaScript floating-point numbers.
 
-## Verification record
+## Phase 2 engine verification record
 
 Run from the repository root, using Node.js 24.22.1 as tested:
 
 ```sh
-node --test tests/calculator/*.test.mjs tests/check-static.mjs
+node --test tests/calculator/*.test.mjs tests/startup.test.mjs tests/check-static.mjs
 ```
 
-Current result: **102 tests passed, zero failed**. The suite covers:
+The engine phase recorded **102 tests passed, zero failed**. The current combined suite includes UI adapters and has **113 passing tests**. Engine-phase coverage includes:
 
 - Every supplied assessment check figure, including Year 1, Year 5, Year 10, and Year 30 figures and all five headlines.
 - Numeric defaults mapped to workbook cells, including the intentional 10% management override and the two added growth inputs.
@@ -141,4 +141,4 @@ Current result: **102 tests passed, zero failed**. The suite covers:
 
 A read-only, fresh-context AI-assisted follow-up review reported no reproducible defects within its coverage. It independently exercised the original repeated-root regressions, 2,664 exact known-factor cases, and 114 additional coefficient-scaling, zero-padding, and extreme-discount-factor cases. Both root classification and computed IRR were checked. Constructed coefficients stayed within exact integer bounds; 593 generator candidates outside the degree/safe-integer limits were skipped rather than treated as reliable oracles. The 16,384-bit arithmetic-budget boundary and arbitrary extreme IEEE-754 coefficient mixtures were not exhaustively tested.
 
-Coverage limits: this is not a proof over every floating-point input. Safari, Firefox, Edge-specific, physical-device, and assistive-technology testing have not been performed for this phase. UI integration, live field behavior, projection-table/chart rendering, and deployment remain separate phases. Publishing the feature branch is a separately authorized Git operation, not a deployment or a merge into `develop` or `main`.
+Coverage limits: this is not a proof over every floating-point input. Safari, Firefox, Edge-specific, physical-device, and assistive-technology testing have not been performed for this phase. Live UI integration and field behavior are now covered separately in [the Phase 3 verification record](interactive-calculator.md). Projection-table/chart rendering and deployment remain later work. Publishing the feature branch is a separately authorized Git operation, not a deployment or a merge into `develop` or `main`.

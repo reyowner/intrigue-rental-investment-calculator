@@ -5,6 +5,7 @@
 This is a static site built with plain HTML, CSS, and native JavaScript modules. There is no framework, package manifest, bundler, backend, or build step. Serve the repository root over HTTP, then load `index.html`.
 
 - `index.html` owns document metadata, font loading, the stylesheet/module entry points, skip link, and loading/no-JavaScript fallback.
+- `src/bootstrap.js` imports the application inside an error boundary, updates loading/ready/error state, and restores the startup screen if initialization fails after partial rendering.
 - `src/main.js` starts the application and honors initial section hashes.
 - `src/pages/homepage.js` composes shared chrome and feature sections, initializes behavior, and manages focus after native anchor navigation.
 
@@ -26,9 +27,10 @@ src/
         contact/         Contact markup, styles, local validation
     calculator/
       engine.js          Public pure calculation entry, no DOM or side effects
-      constants/         Numeric financial defaults and preview-only formatted copy
-      utils/             Validation, mortgage, projection, and IRR/root mathematics
-      components/        Presentation-only preview, not yet connected to the engine
+      calculator-controller.js  Native form events, validation, and live result updates
+      constants/         Numeric defaults and complete input labels/helpers
+      utils/             Financial engine functions plus input/presentation adapters
+      components/        Calculator form, derived totals, headline markup and styles
   pages/homepage.js
   styles/
     tokens.css           Exact assessment brand tokens and shared spacing
@@ -54,7 +56,9 @@ Navigation uses app-local fragment anchors, preserving direct links, reloads, an
 
 The calculator feature exposes `calculateInvestment()` from `engine.js`. Financial defaults live in `constants/default-inputs.js`; pure calculation and validation functions live in `utils/`. Financial tests live in `tests/calculator/` and run without loading the page. The engine has no DOM, network, storage, or formatting dependencies. See [the API](calculator-engine.md).
 
-The page still composes the explicitly noninteractive preview. The next phase will add real controls and headline rendering, followed by the projection table and chart. Keep those responsibilities in calculator feature components. Formatted strings in `constants/example-deal.js` are presentation-only, not a numeric source of truth; use the engine's defaults and validated model instead.
+The page composes `calculator()` and initializes `initializeCalculator(root)` after mounting. `constants/input-fields.js` defines every control and helper, obtaining numeric defaults from the engine's frozen defaults. `utils/input-values.js` preserves raw form values for engine validation; `utils/result-view.js` formats successful models and explicit N/A states. The controller updates text and error attributes without replacing focused inputs, so caret, disclosure state, and entered values survive recalculation. The unused preview-only components and formatted defaults have been removed.
+
+The next phase will render the mandatory projection table and chart from the existing annual model. Keep those responsibilities in calculator feature components, not the homepage or a second financial implementation. See [the UI guide](interactive-calculator.md).
 
 The contact form is local-only. It validates but never sends or persists details. Adding a real submission service is a separately scoped change requiring truthful status copy and explicit authorization.
 
